@@ -13,6 +13,15 @@ env/
 # Django secret keys
 *.env
 
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore SQLite database file
+db.sqlite3
+
 # Django stuff:
 *.log
 *.pot
