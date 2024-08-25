@@ -1,53 +1,457 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import './Navbar.css'
 
 const Navbar = () => {
-    return (
-        <Router>
-            <div>
-                <nav className="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
-                    <nav className="navbar navbar-expand-lg bg-body-tertiary">
-                        <div className="container-fluid">
-                            <Link className="navbar-brand" to="#">
-                                <img src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Bootstrap" width="30" height="24" />
-                            </Link>
-                            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                <span className="navbar-toggler-icon"></span>
-                            </button>
-                            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                                    <li className="nav-item">
-                                        <Link className="nav-link active" aria-current="page" to="#">Home</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="#">Link</Link>
-                                    </li>
-                                    <li className="nav-item dropdown">
-                                        <Link className="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Dropdown
-                                        </Link>
-                                        <ul className="dropdown-menu">
-                                            <li><Link className="dropdown-item" to="#">Action</Link></li>
-                                            <li><Link className="dropdown-item" to="#">Another action</Link></li>
-                                            <li><hr className="dropdown-divider" /></li>
-                                            <li><Link className="dropdown-item" to="#">Something else here</Link></li>
-                                        </ul>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link disabled" to="#" aria-disabled="true">Disabled</Link>
-                                    </li>
-                                </ul>
-                                <form className="d-flex" role="search">
-                                    <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                    <button className="btn btn-outline-success" type="submit">Search</button>
-                                </form>
-                            </div>
-                        </div>
-                    </nav>
-                </nav>
+  return (
+    <>
+      {/* <Router> */}
+        <div id="login" class="pop">
+          <div class="left">
+            <h1>
+              Simple, Free
+              <br />
+              Investing
+            </h1>
+            <h4>Direct Mutual Funds</h4>
+          </div>
+          <div class="right">
+            <form class="LoginButton" onsubmit="submitForm(event)">
+              <h2>Welcome to Groww</h2>
+              <div class="none">
+                <a href="#">
+                  <img src="https://assets-netstorage.groww.in/website-assets/prod/1.8.2/build/client/images/google-icon.5c764c55.svg" />
+                  <p>continue with Google</p>
+                </a>
+                <p class="or">Or</p>
+              </div>
+              <input
+                class="email"
+                type="Email"
+                placeholder="Your Email Address"
+              />
+              <div class="otp">
+                <p class="content">Type otp</p>
+                <input class="otporpass" type="text" />
+              </div>
+              <div class="pass">
+                <p class="content">Type Password</p>
+                <input class="passorotp" type="password" />
+              </div>
+
+              <input type="submit" value="Continue" class="signup" />
+            </form>
+            <button onsubmit="setPassForm(event)" class="setPass">
+              <input type="password" placeholder="new password" id="newPass" />
+              <input
+                type="password"
+                placeholder="confirm password"
+                id="confPass"
+              />
+              <div class="setPassBtn">Continue</div>
+            </button>
+            <div class="close-btn">&times;</div>
+          </div>
+        </div>
+
+        <div class="head-container">
+          <div class="navbar">
+            <div class="navbar">
+              <div class="image">
+                <img src="Images/logolanding.svg" alt="Groww Logo" />
+              </div>
+
+              <div id="searchbar">
+                <input
+                  type="search"
+                  id="search"
+                  placeholder="What are you looking for today?"
+                />
+                <img class="searchIcon" src="Images/searchlogo.svg" />
+              </div>
+              <button id="reg_login" class="btn-color content_click">
+                Login/Register
+              </button>
             </div>
-        </Router>
-    );
+          </div>
+        </div>
+
+        <div class="features">
+          <div class="left-container">
+            <h2>
+              Invest in
+              <span class="text-change">
+                <div class="slide">Stocks</div>
+                <div class="slide">Mutual Funds</div>
+                <div class="slide">Futures & Options</div>
+                <div class="slide">US Stocks</div>
+                <div class="slide">Gold</div>
+                <div class="slide">FDs</div>
+              </span>
+            </h2>
+            <p>
+              Trusted by <strong>Millions</strong> of Indians. Start investing
+              today.
+            </p>
+            <button id="getStarted" class="btn-color content_click">
+              Get Started
+            </button>
+          </div>
+          <div class="stockslst">
+            <a href="./stocks-info/mutualfund.html">
+              <div class="stockdiv">
+                <div class="mutual-funds">
+                  <img class="stocklogo" src="Images/mf.svg" />
+                  <p>Mutual Funds</p>
+                </div>
+              </div>
+            </a>
+
+            <a href="./stocks-info/stocks.html">
+              <div class="stockdiv">
+                <div class="stocks">
+                  <img class="stocklogo" src="Images/stocks.svg" />
+                  <p>Stocks</p>
+                </div>
+              </div>
+            </a>
+
+            <a href="#">
+              <div class="stockdiv">
+                <div class="futures">
+                  <img class="stocklogo" src="Images/fo.svg" />
+                  <p>Futures & Options</p>
+                </div>
+              </div>
+            </a>
+
+            <a href="#">
+              <div class="stockdiv">
+                <div class="USstocks">
+                  <img class="stocklogo" src="Images/usstocks.svg" />
+                  <p>US Stocks</p>
+                </div>
+              </div>
+            </a>
+
+            <a href="#">
+              <div class="stockdiv">
+                <div class="gold">
+                  <img class="stocklogo" src="Images/gold.svg" />
+                  <p>Gold</p>
+                </div>
+              </div>
+            </a>
+
+            <a href="#">
+              <div class="stockdiv">
+                <div class="fd">
+                  <img class="stocklogo" src="Images/fds.svg" />
+                  <p>Fixed Deposits</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="our-products">
+          <div class="ophead">
+            <h3>Our Products</h3>
+          </div>
+
+          <h2 class="motto">Your money. Your choice.</h2>
+          <div class="tabcontainer" id="tabs">
+            <div onclick="stocksbox()" id="stockstab">
+              <img class="stocktablogo" src="Images/stocks.svg" />
+              <div class="red">Stocks</div>
+              <div id="stockboxdata"></div>
+            </div>
+
+            <div onclick="mfbox()" id="stockstab">
+              <img class="stocktablogo" src="Images/mf.svg" />
+              <div class="red">Mutual Funds</div>
+              <div id="mfboxdata"></div>
+            </div>
+
+            <div onclick="goldbox()" id="stockstab">
+              <img class="stocktablogo" src="Images/gold.svg" />
+              <div class="red">Gold</div>
+              <div id="golddata"></div>
+            </div>
+
+            <div onclick="usstocksbox()" id="stockstab">
+              <img class="stocktablogo" src="Images/usstocks.svg" />
+              <div class="red">US Stocks</div>
+              <div id="usstocksdata"></div>
+            </div>
+
+            <div onclick="fdbox()" id="stockstab">
+              <img class="stocktablogo" src="Images/fds.svg" />
+              <div class="red">FDs</div>
+              <div id="fddata"></div>
+            </div>
+          </div>
+        </div>
+        <section class="canvasArt">
+          <div class="canvasText">
+            <div class="canvasHeading">Trusted by</div>
+            <div class="canvasUsers">10 Million+ users</div>
+            <div class="canvasPara">
+              We’ve got the ISO 27001:2013 certification to show for it! Our
+              cutting-edge technology ensure that all your information remains
+              fully encrypted and secure.
+            </div>
+          </div>
+          <div class="sheildDiv">
+            <img class="sheildImg" src="Images/shield.png" />
+          </div>
+        </section>
+
+        <div class="keepLearningDiv">
+          <div class="keepLearningHeading">Keep learning. Keep growing</div>
+          <div class="keepLearningBoxes">
+            <div class="KL1">
+              <div class="keepLearningImage">
+                <img src="Images/kl1.png" />
+              </div>
+              <div class="keepLearningText">
+                How to Select/Pick Stocks for Intraday
+              </div>
+            </div>
+
+            <div class="KL2">
+              <div class="keepLearningImage">
+                <img src="Images/kl2.png" />
+              </div>
+              <div class="keepLearningText">
+                Beginners Guide to Mutual Funds
+              </div>
+            </div>
+
+            <div class="KL3">
+              <div class="keepLearningImage">
+                <img src="Images/kl1.png" />
+              </div>
+              <div class="keepLearningText">
+                How to Diversify in the Time of Market Volatility
+              </div>
+            </div>
+          </div>
+          <div class="viewDiv">
+            View all articles
+            <span class="material-icons"> arrow_right_alt </span>
+          </div>
+        </div>
+        <div class="press-container">
+          <div class="press-heading">In the Press</div>
+          <div class="press-titles">
+            <div class="yourstory">
+              <img src="Images/yourstory.svg" alt="yourstory" />
+            </div>
+
+            <div class="livemint">
+              <img src="Images/livemint.svg" alt="livemint" />
+            </div>
+
+            <div class="businessline">
+              <img src="Images/businessline.svg" alt="businessline" />
+            </div>
+
+            <div class="enterpreneur">
+              <img src="Images/entrepreneur.svg" alt="enterpreneur" />
+            </div>
+          </div>
+        </div>
+        <div id="rating">
+          <div id="rating1">
+            <div>
+              <p class="rating-tagline">Creating proud investors.</p>
+              <p id="ratingp1">
+                You can feel the pride of being a Groww investor in their words.
+              </p>
+            </div>
+            <div id="ratinga1">
+              <div>
+                <a href="#">View More</a>
+              </div>
+              <div>
+                <span class="material-icons icon1"> arrow_right_alt </span>
+              </div>
+            </div>
+          </div>
+          <div id="rating2">
+            <div id="rating21">
+              <div class="rating211">
+                <div>
+                  <img src="./images/reviews.png" alt="" />
+                </div>
+                <div>
+                  <span class="material-icons">grade</span>
+                  <span class="material-icons">grade</span>
+                  <span class="material-icons">grade</span>
+                  <span class="material-icons">grade</span>
+                  <span class="material-icons">grade</span>
+                </div>
+              </div>
+              <div class="rating212">
+                "Groww.in was the platform where I first got onboard to MF and I
+                would have to say, even for a beginner like me it made things
+                quite easier to explore and invest."
+              </div>
+              <div class="rating213">
+                <p>Ankit Puri</p>
+                <p>Product Specialist,Google</p>
+              </div>
+            </div>
+            <div id="rating21">
+              <div class="rating211">
+                <div>
+                  <img src="./images/reviews.png" alt="" />
+                </div>
+                <div>
+                  <span class="material-icons">grade</span>
+                  <span class="material-icons">grade</span>
+                  <span class="material-icons">grade</span>
+                  <span class="material-icons">grade</span>
+                  <span class="material-icons">grade</span>
+                </div>
+              </div>
+              <div class="rating212">
+                "Groww.in was the platform where I first got onboard to MF and I
+                would have to say, even for a beginner like me it made things
+                quite easier to explore and invest."
+              </div>
+              <div class="rating213">
+                <p>Ankit Puri</p>
+                <p>Product Specialist,Google</p>
+              </div>
+            </div>
+            <div id="rating21">
+              <div class="rating211">
+                <div>
+                  <img src="./images/reviews.png" alt="" />
+                </div>
+                <div>
+                  <span class="material-icons">grade</span>
+                  <span class="material-icons">grade</span>
+                  <span class="material-icons">grade</span>
+                  <span class="material-icons">grade</span>
+                  <span class="material-icons">grade</span>
+                </div>
+              </div>
+              <div class="rating212">
+                "Groww.in was the platform where I first got onboard to MF and I
+                would have to say, even for a beginner like me it made things
+                quite easier to explore and invest."
+              </div>
+              <div class="rating213">
+                <p>Ankit Puri</p>
+                <p>Product Specialist,Google</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footerDiv">
+          <div class="footer">
+            <div id="footer1">
+              <div id="footer11">
+                <img src="images/logo.svg" alt="" />
+              </div>
+              <div id="footer12">
+                No.11, 2nd floor, 80 FT Road 4th Block, S.T Bed, Koramangala
+                Bengaluru - 560034
+              </div>
+              <div id="footer13">
+                <a href="#">ContactUs</a>
+              </div>
+              <div id="footer14icons">
+                <div>
+                  <a href="#">
+                    <img src="images/fb_icon.svg" alt="" />
+                  </a>
+                </div>
+                <div>
+                  <a href="#">
+                    <img src="images/twitter_icon.svg" alt="" />
+                  </a>
+                </div>
+                <div>
+                  <a href="#">
+                    <img src="images/mk.svg" alt="" />
+                  </a>
+                </div>
+                <div>
+                  <a href="#">
+                    <img src="images/instagram_icon.svg" alt="" />
+                  </a>
+                </div>
+                <div>
+                  <a href="#">
+                    <img src="images/linkedin_icon.svg" alt="" />
+                  </a>
+                </div>
+                <div>
+                  <a href="#">
+                    <img src="images/telegram_icon.svg" alt="" />
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div id="footer2">
+              <div id="footer21">PRODUCTS</div>
+              <div id="footer22">
+                <a href="#">Stocks</a>
+                <a href="#">Futures & Options</a>
+                <a href="#">Mutual Funds</a>
+                <a href="#">Fixed Deposit</a>
+                <a href="#">Gold</a>
+                <a href="#">US Stocks</a>
+              </div>
+            </div>
+            <div id="footer3">
+              <div id="footer31">GROWW</div>
+              <div id="footer32">
+                <a href="#">About Us</a>
+                <a href="#">Pricing</a>
+                <a href="#">Blog</a>
+                <a href="#">Media & Press</a>
+                <a href="#">Help and Support</a>
+              </div>
+            </div>
+            <div id="footer4">
+              <div id="footer41">QUICK LINKS</div>
+              <div id="footer42">
+                <a href="#">AMC Mutual Funds</a>
+                <a href="#">Calculators</a>
+                <a href="#">Glossary</a>
+                <a href="#">Open Demat Account</a>
+                <a href="#">Groww Digest</a>
+              </div>
+            </div>
+
+            <div id="footer5">
+              <hr />
+            </div>
+
+            <div id="footer6">
+              <div id="footer61">
+                ⓒ&nbsp;2016-2021 Groww, All rights reserved, Build with Love in
+                India
+              </div>
+              <div id="footer62">
+                <div id="footer62img">
+                  <img src="images/google-play-logo.svg" alt="" />
+                </div>
+                <div>
+                  <img src="images/app-store-logo.svg" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {/* </Router> */}
+    </>
+  );
 };
 
 export default Navbar;
