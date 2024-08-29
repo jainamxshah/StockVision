@@ -1,420 +1,593 @@
-import React from 'react'
-import './LandingPage.css'
-import flashicon from'../../assets/flashicon.svg'
-import rupeeicon from'../../assets/rupeeicon.svg'
-import stocksDesktop from'../../assets/stocksDesktop.png'
-import tick from'../../assets/tick.svg'
-import logo from'../../assets/logo.svg'
-import appLogo from'../../assets/app-store-logo.svg'
-import fb_icon from'../../assets/fb_icon.svg'
+import React from "react";
+import "./LandingPage.css";
+import flashicon from "../../assets/flashicon.svg";
+import rupeeicon from "../../assets/rupeeicon.svg";
+import landing from "../../assets/Landing.jpg";
+import desk from "../../assets/Desk.jpg";
+import logo from "../../assets/logo.svg";
+import appLogo from "../../assets/app-store-logo.svg";
+import fb_icon from "../../assets/fb_icon.svg";
+import Footer from "../../Components/Footer/Footer";
+import IndicesPrices from "../../Components/Indices/Indices"
+import Navbar from "../../Components/Navbar/Navbar";
 
 export default function LandingPage() {
   return (
     <>
-        <div className="MainContainer">
-        <div className="container1">
-          <div className="box1">Stocks will help you grow your wealth!</div>
-          <div className="box2">
-            <div id="box2_1">
-              <img src={flashicon} alt="" />
-            </div>
-            <div id="box2_2">
-              <div>Buy/sell stocks in one click</div>
-              <div>
-                No complicated steps.You like a stocks,you buy it in one
-                click.When you're ready to sell,do that in one click easily
-              </div>
-            </div>
-          </div>
-          <div className="box3">
-            <div id="box3_1">
-              <img src={rupeeicon} alt="" />
-            </div>
-            <div id="box3_2">
-              <div>Made for investors &amp; traders</div>
-              <div>
-                Prefer value investing?Choose delivery as the type of order on
-                Groww.If you're a day trader,we've got intraday too.
-              </div>
-            </div>
-          </div>
+      <div>
+
+        {/* ----------- navbar (End) ----------- */}
+
+        <div id="logOutDropDown" className="noDropDownDisplay">
+          <div className="logout">Log Out</div>
         </div>
-        {/*Middle Part*/}
-        {/* start middle-section-div */}
-        <div id="mid-section-div">
-          <div className="relatives">
-            <h1>Discover Stocks</h1>
-            <p>Search Stocks, AMCs etc</p>
-            <input type="text" placeholder="Search Mutual Funds" />
-            <div className="list">
-              <li className="removelist">×</li>
-              <a href="https://groww.in/mutual-funds/hdfc-small-cap-fund-direct-growth"><li>hdfc</li></a>
-              <a href="https://groww.in/mutual-funds/sbi-small-midcap-fund-direct-growth"><li>sbi</li></a>
-              <a href="https://groww.in/mutual-funds/birla-sun-life-short-term-fund-direct-growth"><li>aditya birla sun life</li></a>
-              <a href="https://groww.in/mutual-funds/kotak-midcap-fund-direct-growth"><li>kotak</li></a>
-              <a href="https://groww.in/mutual-funds/l-t-midcap-fund-direct-growth"><li>L&amp;T</li></a>
-              <a href="https://groww.in/mutual-funds/icici-prudential-indo-asia-equity-fund-direct-growth"><li>ICICI Prudential life MF</li></a>
-              <a href="https://groww.in/mutual-funds/boi-axa-multi-cap-fund-direct-growth"><li>BOI</li></a>
-              <a href="https://groww.in/mutual-funds/hsbc-brazil-fund-direct-growth"><li>britanni Industries</li></a>
-            </div>
-            <img width="19px" height="19px" className="image" src="https://assets-netstorage.groww.in/website-assets/prod/1.8.1/build/client/images/search.494f6987.svg" />
-          </div>
-          <div className="sub-sections">
-            <div>
-              <img src="https://assets-netstorage.groww.in/website-assets/prod/1.8.1/build/client/images/mf_high_return.36c4ba17.svg" />
-              <a href="https://groww.in/mutual-funds/collection/best-high-returns-direct-mutual-funds"><p>High Return</p></a>
-            </div>
-            <div>
-              <img src="https://assets-netstorage.groww.in/website-assets/prod/1.8.1/build/client/images/mf_tax_saving.a2cd4a1a.svg" />
-              <a href="https://groww.in/mutual-funds/collection/best-tax-saving-direct-mutual-funds"><p>Tax Saving</p></a>
-            </div>
-            <div>
-              <img src="https://assets-netstorage.groww.in/website-assets/prod/1.8.1/build/client/images/mf_low_risk.190d88fc.svg" />
-              <a href="https://groww.in/mutual-funds/collection/better-than-fd-direct-mutual-funds"><p>Better Than fd</p></a>
-            </div>
-            <div>
-              <img src="https://assets-netstorage.groww.in/website-assets/prod/1.8.1/build/client/images/mf_large_cap.9cf9b353.svg" />
-              <a href="https://groww.in/mutual-funds/collection/best-top-large-caps-direct-mutual-funds"><p>Top Companies</p></a>
-            </div>
-            <div>
-              <img src="https://assets-netstorage.groww.in/website-assets/prod/1.8.1/build/client/images/mf_small_mid.2daccdba.svg" />
-              <a href="https://groww.in/mutual-funds/collection/best-sip-with-%E2%82%B9500-direct-mutual-funds"><p>Sip With ₹500</p></a>
-            </div>
-            <div>
-              <img src="https://assets-netstorage.groww.in/website-assets/prod/1.8.1/build/client/images/mf_returns_risk.ac1502c1.svg" />
-              <a href="https://groww.in/mutual-funds/collection/best-balance-returns-risk-direct-mutual-funds"><p>Sector Bets</p></a>
-            </div>
-          </div>
-          <a><p className="btn">Explore all Stocks</p></a>
-        </div>
-        {/* end of middle-section-div */}
-        {/* start of extra-section */}
-        <div className="extra-section">
-          <div>
-            <h1>35+ Fund Partners</h1>
-            <a href="#">View all Fund Partners</a>
-          </div>
-          <div className="MF">
-            <div className="kotakMF" />
-            <div className="ltMF" />
-            <div className="iciciMF" />
-            <div className="axisMF" />
-            <div className="hdfcMF" />
-          </div>
-        </div>
-        <h2 className="main-head">Frequently Asked questions</h2>
-        <div className="freq">
-          <div className="freq1">
-            <div>
-              <p>What are stocks and how do they work?</p>
-              <br />
-              <p className="text1 display1">
-                A mutual fund is an investment scheme that pools money from many
-                investors which is further invested by a professional fund
-                manager. The fund manager can invest this pooled money to purchase
-                securities like stocks, bonds, gold, or any combination of these.
-                Every mutual fund works around certain investment objectives and
-                attempts to achieve the same. The fund manager plans the
-                investment accordingly and allocates the asset between stocks and
-                bonds. Combining all, these securities form the portfolio
-                composition of the selected scheme.
-              </p>
-            </div>
-            <span className="material-icons"> expand_more </span>
-          </div>
-          <div className="freq2">
-            <div>
-              <p>What are the stocks investment charges on Groww?</p>
-              <br />
-              <p className="text2 display2">
-                The first and foremost step is to decide on how much risk you are
-                willing to take and investment tenure. Once you decide this, you
-                can easily select the best mutual fund for you. At Groww, you can
-                select from different categories of mutual funds such as high
-                return, tax saving, top companies, and much more.
-              </p>
-            </div>
-            <span className="material-icons"> expand_more </span>
-          </div>
-          <div className="freq3">
-            <div>
-              <p>What is the process of account opening on Groww?</p>
-              <br />
-              <p className="text3 display3">
-                There are two ways of investing in mutual funds - via a systematic
-                investment plan SIP or investing through a one-time lump sum
-                method. The primary difference between the two is in a lump sum
-                you have to invest the whole amount in one go and in SIP, you can
-                invest in a mutual fund at fixed intervals such as monthly SIP.
-              </p>
-            </div>
-            <span className="material-icons"> expand_more </span>
-          </div>
-          <div className="freq4">
-            <div>
-              <p>Are there any account opening charges on Groww?</p>
-              <br />
-              <p className="text4 display4">
-                You can either use the website or download Groww mobile app to
-                start investing in mutual funds on Groww.
-              </p>
-            </div>
-            <span className="material-icons"> expand_more </span>
-          </div>
-          <div className="freq5">
-            <div>
-              <p>
-                What documents do I need to open a trading and Demat account on
-                Groww?
-              </p>
-              <br />
-              <p className="text5 display5">
-                Groww charges a 0% commission on MF investment. You can freely
-                choose from over 5000+ direct mutual funds and start your
-                investing journey anytime.
-              </p>
-            </div>
-            <span className="material-icons"> expand_more </span>
-          </div>
-        </div>
-        {/* end of extra-section */}
-        {/*Middle partend*/}
-        <div id="firstmove">
-          <div id="firstmove1">
-            <img src="../images/stocksDesktop.png" alt="" />
-          </div>
-          <div id="firstmove2">
-            <div id="firstmove21">Make your first move with confidence.</div>
-            <div className="firstmove22">
-              <div>
-                <img src="../images/tick.svg" alt="" />
+        <div id="dropDown" className="noDropDownDisplay" />
+        <div id="cont1" className="max-w" style={{ marginTop: "30px" }}>
+          <div id="first">
+            <div className="content">
+              <div className="body-1">
+                <h1>
+                  Invest in <strong>STOCKS</strong>
+                </h1>
               </div>
-              <div>
-                <p>Open your account within minutes</p>
-                <p>Quick and 100% paperless account opening process.</p>
-              </div>
-            </div>
-            <div className="firstmove22">
-              <div>
-                <img src="../images/tick.svg" alt="" />
-              </div>
-              <div>
-                <p>Top movers in the market</p>
+              <div id="mid-text">
                 <p>
-                  Keep an eye on the gainers,top losers,top stocks bymarket cap,
-                  and more - updated live on the web and app.
+                  Trusted by <strong>Millions</strong> of Indians. Start
+                  investing <br /> today.{" "}
                 </p>
               </div>
-            </div>
-            <div className="firstmove22">
-              <div>
-                <img src="../images/tick.svg" alt="" />
-              </div>
-              <div>
-                <p>Financial reports in one place</p>
-                <p>
-                  Stay ahead of the curve with P&amp;L reports, balance sheets, and
-                  other financial reports of any company to make informed
-                  decisions.
-                </p>
+              <div id="get-btn">
+                <button>Get Started</button>
               </div>
             </div>
-            <div id="firstmove23">
-              <button id="moveButton">Get Started</button>
+          </div>
+          {/* ------------ grid - type catogories ---------- */}
+          <div id="second">
+            <div id="cont">
+              <img id="image-section" src={landing} />
             </div>
           </div>
         </div>
-        <div id="downloadGroww">
-          <div id="downloadGroww1">
+        {/* -------  slide - options ------- */}
+        <div className="max-w">
+          {/* -- data from JS -- */}
+          <div id="data">
+            {/* -- default part -- */}
+            <div className="container">
+              <div>
+                <img
+                  src={desk}
+                  className="img-1"
+                />
+              </div>
+              <div className="div-text">
+                <div className="text-part">
+                  <h1 className="h-bold">
+                    <span>Zero </span>account charges{" "}
+                  </h1>
+                  <p className="para">
+                    {" "}
+                    You don't have to pay a single rupee for opening a stocks
+                    account or account maintanace{" "}
+                  </p>
+                  <button className="create-btn">
+                    {" "}
+                    Create Account For Free{" "}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="animation-div">
+          <div className="max-w">
+            <div className="hs33TextWrapper">
+              <div className="hs33Heading">Trusted by</div>
+              <div className="hs33Heading">10 Million+ users</div>
+              <div className="hs33Para">
+                We’ve got the ISO 27001:2013 certification to show for it! Our
+                cutting-edge technology ensure that all your information remains
+                fully encrypted and secure.
+              </div>
+            </div>
+            {/* <div class="anim-img hs33TextWrapper">
+                <img src="//assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/build/client/images/shield-groww.0d0cc15e.png"
+                    alt="lock">
+            </div> */}
+          </div>
+        </div>
+        <div id="section-three" className="max-w">
+          <div id="section-three-heading" className="max-w">
+            Keep learning. Keep growing.
+          </div>
+          <IndicesPrices/>
+          <div id="section-three-img" className="max-w">
+            
+          </div>
+        </div>
+        <div style={{ marginTop: "60px" }} className="view-more">
+          <a href="#">
+            {" "}
+            <span> View all articles </span> <span> → </span>{" "}
+          </a>
+        </div>
+        <section id="press-section" className="max-w">
+          <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
+            <div className="border-line right" />
+            <span id="heading">In The Press</span>
+            <div className="border-line left" />
+          </div>
+          {/* -------- */}
+          <div
+            className="press-name"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginTop: "30px",
+            }}
+          >
+            <a href="https://groww.in/p/press/" target="_blank">
+              <div>
+                <img
+                  src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/build/client/images/ys.9166bd37.svg"
+                  width={166}
+                  height={88}
+                  alt="ys"
+                />
+              </div>
+            </a>
+            <a href="https://groww.in/p/press/" target="_blank">
+              <div>
+                <img
+                  src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/build/client/images/live.7edf8d7a.svg"
+                  width={166}
+                  height={88}
+                  alt="live"
+                />
+              </div>
+            </a>
+            <a href="https://groww.in/p/press/" target="_blank">
+              <div>
+                <img
+                  src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/build/client/images/business.dc402a84.svg"
+                  width={166}
+                  height={88}
+                  alt="business"
+                />
+              </div>
+            </a>
+            <a href="https://groww.in/p/press/" target="_blank">
+              <div>
+                <img
+                  src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/build/client/images/enter.09e9d78c.svg"
+                  width={166}
+                  height={88}
+                  alt="ent"
+                />
+              </div>
+            </a>
+          </div>
+        </section>
+        <section
+          id="testonomials"
+          style={{ marginTop: "30px", marginBottom: "30px" }}
+        >
+          <div className="max-w">
             <div>
-              Download Groww on your Phone for the best investing experience
-            </div>
-            <div id="downloadGroww11">
-              <img src="../images/google-play-logo.svg" alt="" />
-            </div>
-            <div id="downloadGroww12">
-              <img src="../images/app-store-logo.svg" alt="" />
+              <div className="heading">Creating proud investors.</div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+                className="view-more"
+              >
+                <div id="para">
+                  You can feel the pride of being a Groww investor in their
+                  words.
+                </div>
+                <a href="#">
+                  {" "}
+                  <span> View More</span> <span> → </span>{" "}
+                </a>
+              </div>
+              {/* -- card -- */}
+              <div
+                id="card-div"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginTop: "40px",
+                  width: "100%",
+                }}
+              >
+                <a href="#">
+                  <div className="card">
+                    <div className="profile-img display-flx">
+                      <div>
+                        <img
+                          className="UserImg"
+                          src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/build/client/images/ankitImg.863e0afa.png"
+                          width={56}
+                          height={56}
+                          alt="Ankit"
+                        />
+                      </div>
+                      <div>
+                        <i
+                          className="material-icons is31Default t39Star"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            fontSize: "24px",
+                          }}
+                        >
+                          grade
+                        </i>
+                        <i
+                          className="material-icons is31Default t39Star"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            fontSize: "24px",
+                          }}
+                        >
+                          grade
+                        </i>
+                        <i
+                          className="material-icons is31Default t39Star"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            fontSize: "24px",
+                          }}
+                        >
+                          grade
+                        </i>
+                        <i
+                          className="material-icons is31Default t39Star"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            fontSize: "24px",
+                          }}
+                        >
+                          grade
+                        </i>
+                        <i
+                          className="material-icons is31Default t39Star"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            fontSize: "24px",
+                          }}
+                        >
+                          grade
+                        </i>
+                      </div>
+                    </div>
+                    <div className="say">
+                      “Groww.in was the platform where I first got onboard to MF
+                      and I would have to say, even for a beginner like me it
+                      made things quite easier to explore and invest.
+                    </div>
+                    <div className="name">Ankit Puri</div>
+                    <div className="company">Product Specialist, Google</div>
+                  </div>
+                </a>
+                <a href="#">
+                  <div className="card">
+                    <div className="profile-img display-flx">
+                      <div>
+                        <img
+                          className="UserImg"
+                          src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/build/client/images/amitImg.ebb056f0.jpeg"
+                          width={56}
+                          height={56}
+                          alt="Amit"
+                        />
+                      </div>
+                      <div>
+                        <i
+                          className="material-icons is31Default t39Star"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            fontSize: "24px",
+                          }}
+                        >
+                          grade
+                        </i>
+                        <i
+                          className="material-icons is31Default t39Star"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            fontSize: "24px",
+                          }}
+                        >
+                          grade
+                        </i>
+                        <i
+                          className="material-icons is31Default t39Star"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            fontSize: "24px",
+                          }}
+                        >
+                          grade
+                        </i>
+                        <i
+                          className="material-icons is31Default t39Star"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            fontSize: "24px",
+                          }}
+                        >
+                          grade
+                        </i>
+                        <i
+                          className="material-icons is31Default t39Star"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            fontSize: "24px",
+                          }}
+                        >
+                          grade
+                        </i>
+                      </div>
+                    </div>
+                    <div className="say">
+                      “Actually, the UI is extremely simple and easy for users
+                      to adapt, that’s what makes it unique. Many of my
+                      referrals have also joined and enjoying GROWW.
+                    </div>
+                    <div className="name">Amit Sharma</div>
+                    <div className="company">
+                      Solutions Architect, Amazon Web Services
+                    </div>
+                  </div>
+                </a>
+                <a href="#">
+                  <div className="card">
+                    <div className="profile-img display-flx">
+                      <div>
+                        <img
+                          className="UserImg"
+                          src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/build/client/images/roopaImg.5575c84f.jpg"
+                          width={56}
+                          height={56}
+                          alt="Roopa"
+                        />
+                      </div>
+                      <div>
+                        <i
+                          className="material-icons  t39Star"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            fontSize: "24px",
+                          }}
+                        >
+                          grade
+                        </i>
+                        <i
+                          className="material-icons  t39Star"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            fontSize: "24px",
+                          }}
+                        >
+                          grade
+                        </i>
+                        <i
+                          className="material-icons  t39Star"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            fontSize: "24px",
+                          }}
+                        >
+                          grade
+                        </i>
+                        <i
+                          className="material-icons  t39Star"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            fontSize: "24px",
+                          }}
+                        >
+                          grade
+                        </i>
+                        <i
+                          className="material-icons  t39Star"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            fontSize: "24px",
+                          }}
+                        >
+                          grade
+                        </i>
+                      </div>
+                    </div>
+                    <div className="say">
+                      “If you are one of those who would like to take control of
+                      how you save, use Groww. It’s ridiculously easy portal. It
+                      just took me 5 mins to set up and invest.
+                    </div>
+                    <div className="name">Roopa Ambekar</div>
+                    <div className="company">Product Specialist, Google</div>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
-          <div id="downloadGroww2">
-            <img src="https://assets-netstorage.groww.in/website-assets/prod/1.8.2/build/client/images/mfSupportImg.0379d5a2.png" alt="" />
-          </div>
+        </section>
+        {/* -- invest anywhere -- app - link -- */}
+        <div className="max-w" id="invest-anywhere">
+          <section style={{ marginTop: "40px" }}>
+            <div
+              className="invest-class"
+              style={{ display: "flex", alignItems: "center", width: "100%" }}
+            >
+              {/* -- text part - left - heading part -- */}
+              <div className="invest-left-part">
+                <div className="i-text">Invest anywhere,</div>
+                <div className="i-text">anytime.</div>
+                <div className="i-para">
+                  Don’t worry about which device to use. Because we’re in every
+                  one of them.
+                </div>
+                <div
+                  className="i-img"
+                  style={{ display: "flex", alignItems: "baseline" }}
+                >
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <div>
+                      {" "}
+                      <img
+                        style={{ marginRight: "35px" }}
+                        className="hp99BotImg"
+                        src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/build/client/images/dash.a7e0c55c.svg"
+                        width={48}
+                        height={48}
+                        alt="img"
+                      />{" "}
+                    </div>
+                    <div>
+                      <div className="i-img-text">
+                        Stay on top of everything
+                      </div>
+                      <div className="i-img-para">
+                        Keep track of your investments at anytime with Groww.
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginTop: "40px",
+                    }}
+                  >
+                    <div>
+                      {" "}
+                      <img
+                        style={{ marginRight: "35px" }}
+                        className="hp99BotImg"
+                        src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/build/client/images/sync.3ac006aa.svg"
+                        width={48}
+                        height={48}
+                        alt="img"
+                      />{" "}
+                    </div>
+                    <div>
+                      <div className="i-img-text">Always in Sync</div>
+                      <div className="i-img-para">
+                        Groww will take care of synchronizing data so you can
+                        focus on investing.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* -- right - img -- */}
+              <div
+                id="three-img"
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                {/* -- 1st part - 2 img -- */}
+                <div>
+                  <div>
+                    <a href="https://itunes.apple.com/us/app/groww-mutual-funds-app/id1404871703?ls=1&mt=8">
+                      <img
+                        className="iosImg hover-img"
+                        src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/build/client/images/ios.0a99dcbb.png"
+                        width={255}
+                        height={356}
+                        alt="ios"
+                      />
+                    </a>
+                  </div>
+                  <div style={{ marginTop: "30px" }}>
+                    <a href="https://play.google.com/store/apps/details?id=com.nextbillion.groww">
+                      <img
+                        className="andImg hover-img"
+                        src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/build/client/images/android.6dfb12ca.png"
+                        width={255}
+                        height={357}
+                        alt="android"
+                      />
+                    </a>
+                  </div>
+                </div>
+                {/* -- 2nd part - 1 img - in center -- */}
+                <div className="invest-3-img">
+                  <a href="groww_home.html">
+                    <img
+                      className="webImg hover-img"
+                      src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/build/client/images/web.634ac717.png"
+                      width={255}
+                      height={357}
+                      alt="web"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
-        <div id="rating">
-          <div id="rating1">
-            <div>
-              <p>Creating proud investors.</p>
-              <p id="ratingp1">
-                You can feel the pride of being a Groww investor in their words.
-              </p>
-            </div>
-            <div id="ratinga1">
-              <div><a href="#">View More</a></div>
-              <div>
-                <span className="material-icons icon1"> arrow_right_alt </span>
+        {/* -- get in touch -- */}
+        <section id="support" className="max-w">
+          <div className="ss34Wrapper">
+            <div className="absolute-center ss34TextWrapper">
+              <div className="heading ">We’re with you, at every step.</div>
+              <div className="para ss34ParaText">
+                For any query you have, find the answer quickly on our Help
+                &amp; Support. Need a little more help? We’re happy to talk via
+                call or chat.
               </div>
-            </div>
-          </div>
-          <div id="rating2">
-            <div id="rating21">
-              <div className="rating211">
-                <div>
-                  <img src="https://assets-netstorage.groww.in/website-assets/prod/1.8.2/build/client/images/ankitImg.863e0afa.png" alt="" />
+              <div className="ss34GPlayDiv">
+                <div className>
+                  <div
+                    className="btn51Btn  btn51Secondary"
+                    style={{ width: "200px", height: "50px", fontSize: "16px" }}
+                  >
+                    <div className="absolute-center btn51ParentDimension">
+                      <span
+                        className="absolute-center"
+                        style={{ padding: "0px 25px" }}
+                      >
+                        <span style={{ marginTop: "14px" }}>Get In Touch</span>
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <span className="material-icons">grade</span>
-                  <span className="material-icons">grade</span>
-                  <span className="material-icons">grade</span>
-                  <span className="material-icons">grade</span>
-                  <span className="material-icons">grade</span>
-                </div>
-              </div>
-              <div className="rating212">
-                "Groww.in was the platform where I first got onboard to MF and I
-                would have to say, even for a beginner like me it made things
-                quite easier to explore and invest."
-              </div>
-              <div className="rating213">
-                <p>Ankit Puri</p>
-                <p>Product Specialist,Google</p>
               </div>
             </div>
-            <div id="rating21">
-              <div className="rating211">
-                <div>
-                  <img src="https://assets-netstorage.groww.in/website-assets/prod/1.8.2/build/client/images/ankitImg.863e0afa.png" alt="" />
-                </div>
-                <div>
-                  <span className="material-icons">grade</span>
-                  <span className="material-icons">grade</span>
-                  <span className="material-icons">grade</span>
-                  <span className="material-icons">grade</span>
-                  <span className="material-icons">grade</span>
-                </div>
-              </div>
-              <div className="rating212">
-                "Groww.in was the platform where I first got onboard to MF and I
-                would have to say, even for a beginner like me it made things
-                quite easier to explore and invest."
-              </div>
-              <div className="rating213">
-                <p>Ankit Puri</p>
-                <p>Product Specialist,Google</p>
-              </div>
-            </div>
-            <div id="rating21">
-              <div className="rating211">
-                <div>
-                  <img src="https://assets-netstorage.groww.in/website-assets/prod/1.8.2/build/client/images/ankitImg.863e0afa.png" alt="" />
-                </div>
-                <div>
-                  <span className="material-icons">grade</span>
-                  <span className="material-icons">grade</span>
-                  <span className="material-icons">grade</span>
-                  <span className="material-icons">grade</span>
-                  <span className="material-icons">grade</span>
-                </div>
-              </div>
-              <div className="rating212">
-                "Groww.in was the platform where I first got onboard to MF and I
-                would have to say, even for a beginner like me it made things
-                quite easier to explore and invest."
-              </div>
-              <div className="rating213">
-                <p>Ankit Puri</p>
-                <p>Product Specialist,Google</p>
-              </div>
+            <div className="lazyload-wrapper">
+              <img
+                className="ss34Img"
+                src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/build/client/images/hns-support-img.c56178f0.png"
+                width={261}
+                height={327}
+                alt="Help and Support - Groww"
+              />
             </div>
           </div>
-        </div>
-        <div className="footerDiv">
-          <div className="footer">
-            <div id="footer1">
-              <div id="footer11">
-                <img src="../images/logo.svg" alt="" />
-              </div>
-              <div id="footer12">
-                No.11, 2nd floor, 80 FT Road 4th Block, S.T Bed, Koramangala
-                Bengaluru - 560034
-              </div>
-              <div id="footer13"><a href="#">ContactUs</a></div>
-              <div id="footer14icons">
-                <div>
-                  <a href="#"><img src="../images/fb_icon.svg" alt="" /></a>
-                </div>
-                <div>
-                  <a href="#"><img src="../images/twitter_icon.svg" alt="" /></a>
-                </div>
-                <div>
-                  <a href="#"><img src="../images/mk.svg" alt="" /></a>
-                </div>
-                <div>
-                  <a href="#"><img src="../images/instagram_icon.svg" alt="" /></a>
-                </div>
-                <div>
-                  <a href="#"><img src="../images/linkedin_icon.svg" alt="" /></a>
-                </div>
-                <div>
-                  <a href="#"><img src="../images/telegram_icon.svg" alt="" /></a>
-                </div>
-              </div>
-            </div>
-            <div id="footer2">
-              <div id="footer21">PRODUCTS</div>
-              <div id="footer22">
-                <a href="#">Stocks</a>
-                <a href="#">Futures &amp; Options</a>
-                <a href="#">Mutual Funds</a>
-                <a href="#">Fixed Deposit</a>
-                <a href="#">Gold</a>
-                <a href="#">US Stocks</a>
-              </div>
-            </div>
-            <div id="footer3">
-              <div id="footer31">GROWW</div>
-              <div id="footer32">
-                <a href="#">About Us</a>
-                <a href="#">Pricing</a>
-                <a href="#">Blog</a>
-                <a href="#">Media &amp; Press</a>
-                <a href="#">Help and Support</a>
-              </div>
-            </div>
-            <div id="footer4">
-              <div id="footer41">QUICK LINKS</div>
-              <div id="footer42">
-                <a href="#">AMC Mutual Funds</a>
-                <a href="#">Calculators</a>
-                <a href="#">Glossary</a>
-                <a href="#">Open Demat Account</a>
-                <a href="#">Groww Digest</a>
-              </div>
-            </div>
-          </div>
-          <div id="footer5">
-            <hr />
-          </div>
-          <div id="footer6">
-            <div id="footer61">
-              ⓒ&nbsp;2016-2021 Groww, All rights reserved, Build with Love in
-              India
-            </div>
-            <div id="footer62">
-              <div id="footer62img">
-                <img src="../images/google-play-logo.svg" alt="" />
-              </div>
-              <div>
-                <img src="../images/app-store-logo.svg" alt="" />
-              </div>
-            </div>
-          </div>
-        </div>
-        {/*Fake Footer*/}
-        <div id="fakefooter1">
-          <div><img src="../images/footer.png" alt="" /></div>
-        </div>
+        </section>
+        {/* -- footer - (START)-- */}
+        <Footer />
       </div>
     </>
-      
-  )
+  );
 }

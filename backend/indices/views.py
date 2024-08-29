@@ -8,11 +8,12 @@ from .models import IndicePrice
 from .serializers import IndicePriceSerializer
 import yfinance as yf
 from django.utils import timezone
+from rest_framework.permissions import AllowAny
 
 class IndicePriceViewSet(viewsets.ModelViewSet):
     queryset = IndicePrice.objects.all()
     serializer_class = IndicePriceSerializer
-
+    permission_classes = [AllowAny] 
     @action(detail=False, methods=['get'])
     def live_prices(self, request):
         try:
