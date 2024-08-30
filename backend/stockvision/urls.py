@@ -25,4 +25,5 @@ urlpatterns = [
     path('api/stockprice/', include('stockprice.urls')),
     path('api/indices/', include('indices.urls')),
     path('api/news/', include('news.urls')),
+    path('api/users/', include('users.urls')),
 ]
