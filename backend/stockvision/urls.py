@@ -24,5 +24,6 @@ urlpatterns = [
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('api/stockprice/', include('stockprice.urls')),
     path('api/indices/', include('indices.urls')),
+    path('api/news/', include('news.urls')),
     path('api/users/', include('users.urls')),
 ]
