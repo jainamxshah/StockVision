@@ -18,7 +18,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="c-search">
-          <i className="material-icons">search</i>
+          
           <input
             type="search"
             id="search"
