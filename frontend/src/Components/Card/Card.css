@@ -19,6 +19,7 @@
 .stocks{
   margin-top: 40px;
   gap: 30px;
+  display: flex;
 }
 
 /* Card image styling */

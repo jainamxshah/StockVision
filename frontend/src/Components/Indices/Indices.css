@@ -2,15 +2,19 @@
 @import "~slick-carousel/slick/slick-theme.css";
 @import "../../variables.css";
 
+.main-container{
+  padding-top: 100px ;
+  margin-left: 100px;
+}
 .carousel-wrap {
   width: 100%;
-
+  
   margin: 10px auto;
 }
 .index_heading {
   top: -30px;
-  margin-bottom: -150px;
-  left: -20px;
+  margin-bottom: -100px;
+  
   color: var(--head-text-color);
 }
 .index_heading h3 {
@@ -112,9 +116,10 @@
 @media (max-width: 576px) {
   .index_heading {
     font-size: 27px;
-    margin-bottom: -80px;
-    /* text-align: center; */
-    left: 130px;
+    margin-bottom: -10px;
+    margin-left: 15px;
+    
+    
   }
 
   .item {
@@ -155,7 +160,7 @@
 @media (min-width: 577px) and (max-width: 768px) {
   .index_heading {
     font-size: 30px;
-    margin-bottom: -70px;
+    /* margin-bottom: -70px; */
     text-align: center;
   }
 

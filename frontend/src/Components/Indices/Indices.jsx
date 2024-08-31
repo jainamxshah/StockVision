@@ -48,11 +48,10 @@ const IndicePrices = () => {
 
   const { indianStocks, usStocks, crypto } = categorizeStocks();
 
-  
   const settings = {
     dots: true,
     infinite: true,
-    arrows:false,
+    arrows: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -63,24 +62,24 @@ const IndicePrices = () => {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true
-        }
+          dots: true,
+        },
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2
-        }
+          slidesToScroll: 2,
+        },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }]
-    
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   const slides = [
@@ -93,7 +92,7 @@ const IndicePrices = () => {
     return num ? num.toFixed(2) : "N/A";
   };
   const getStockChangeClass = (change) => {
-    return change >= 0 ? 'stock-change positive' : 'stock-change negative';
+    return change >= 0 ? "stock-change positive" : "stock-change negative";
   };
 
   if (error) {
@@ -102,46 +101,47 @@ const IndicePrices = () => {
 
   return (
     <>
-    <div className="container index_heading">
-      <h3 className="heading">Index</h3>
+      <div className="main-container index_heading">
+        <h3 className="heading">Index</h3>
       </div>
-    <div className="carousel-wrap">
-      <Slider {...settings}>
-        {slides.map((slide, slideIndex) => (
-          <div key={slideIndex} className="item">
-            <h2 className="title">{slide.title.toUpperCase()}</h2>
-            <div className="row">
-              {slide.data.length > 0 ? (
-                slide.data.map((stock, index) => (
-                  <div className="col" key={index}>
-                    <h3>{stock.name}</h3>
-                    <p>Current Price: {roundToTwo(stock.current_price)}</p>
-                    <p
-                      className={getStockChangeClass(
-                        stock.current_price - stock.previous_close
-                      )}
-                    >
-                      Change:{" "}
-                      {roundToTwo(stock.current_price - stock.previous_close)}(
-                      {roundToTwo(
-                        ((stock.current_price - stock.previous_close) /
-                          stock.previous_close) *
-                          100
-                      )}
-                      %)
-                    </p>
-                    <p>Day Low: {roundToTwo(stock.day_low)}</p>
-                    <p>Day High: {roundToTwo(stock.day_high)}</p>
-                  </div>
-                ))
-              ) : (
-                <p>No data available</p>
-              )}
+      <div className="carousel-wrap">
+        <Slider {...settings}>
+          {slides.map((slide, slideIndex) => (
+            <div key={slideIndex} className="item">
+              <h2 className="title">{slide.title.toUpperCase()}</h2>
+              <div className="row">
+                {slide.data.length > 0 ? (
+                  slide.data.map((stock, index) => (
+                    <div className="col" key={index}>
+                      <h3>{stock.name}</h3>
+                      <p>Current Price: {roundToTwo(stock.current_price)}</p>
+                      <p
+                        className={getStockChangeClass(
+                          stock.current_price - stock.previous_close
+                        )}
+                      >
+                        Change:{" "}
+                        {roundToTwo(stock.current_price - stock.previous_close)}
+                        (
+                        {roundToTwo(
+                          ((stock.current_price - stock.previous_close) /
+                            stock.previous_close) *
+                            100
+                        )}
+                        %)
+                      </p>
+                      <p>Day Low: {roundToTwo(stock.day_low)}</p>
+                      <p>Day High: {roundToTwo(stock.day_high)}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p>No data available</p>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
-      </Slider>
-    </div>
+          ))}
+        </Slider>
+      </div>
     </>
   );
 };

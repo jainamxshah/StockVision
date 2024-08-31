@@ -7,6 +7,7 @@ import Login from "./Components/auth/Login";
 import Navbar from "./Components/Navbar/Navbar";
 import Explore from "./Pages/Explore/Explore";
 import IndicePrices from "./Components/Indices/Indices";
+import SignUp from "./Components/auth/Signup";
 
 function App() {
   return (
@@ -16,9 +17,9 @@ function App() {
         <Navbar />
     
         <Routes>
-          <Route path="/" element={<Explore />} />
+          <Route path="/explore" element={<Explore />} />
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/signup" element={<Signup />} /> */}
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
       </Router>
     </AuthProvider>

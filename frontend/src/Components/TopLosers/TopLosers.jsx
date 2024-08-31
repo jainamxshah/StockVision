@@ -133,8 +133,8 @@ const TopLosers = () => {
   );
 
   return (
-    <div className="top-gainers-container">
-        <h2>Top Gainers</h2>
+    <div className="top-Losers-container">
+        <h2>Top Losers</h2>
       <div className="category-buttons">
         <button
           onClick={() => handleCategoryChange("Large")}

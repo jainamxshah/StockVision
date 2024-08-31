@@ -15,6 +15,8 @@ import Card from '../../Components/Card/Card'
 import TopGainers from '../../Components/TopGainers/TopGainers'
 import MainNews from '../../Components/MainNews/MainNews'
 import TopLosers from '../../Components/TopLosers/TopLosers'
+import MovingStocks from '../../Components/TopByMarketCap/TopByMarketCap'
+import Footer from '../../Components/Footer/Footer'
 // import {Logout} from './Components/logout';
 
 const Explore = () => {
@@ -28,6 +30,8 @@ const Explore = () => {
       <TopGainers/>
       <MainNews/>
       <TopLosers/>
+      <MovingStocks/>
+      <Footer/>
     </div>
   )
 }
