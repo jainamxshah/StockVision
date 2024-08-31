@@ -1,9 +1,9 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import StockPriceViewSet
+from .views import PortfolioViewSet
 
 router = DefaultRouter()
-router.register(r'stock-prices', StockPriceViewSet, basename='stockprice')
+router.register(r'portfolio', PortfolioViewSet, basename='portfolio')
 
 urlpatterns = [
     path('', include(router.urls)),
