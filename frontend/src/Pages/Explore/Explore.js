@@ -1,33 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
+import './Explore.css'
+
 import Navbar from '../../Components/Navbar/Navbar'
 
 import Indices from '../../Components/Indices/Indices'
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navigation from '../../Components/Navigations';
 import Login from '../../Components/auth/Login';
 import Signup from '../../Components/auth/Signup';
 import { AuthProvider } from '../../context/AuthContext';
+// import Carousel from '../../Components/Carousel/Carousel';
+import IndicePrices from '../../Components/Indices/Indices';
+import Card from '../../Components/Card/Card'
+import TopGainers from '../../Components/TopGainers/TopGainers'
+import MainNews from '../../Components/MainNews/MainNews'
+import TopLosers from '../../Components/TopLosers/TopLosers'
+import MovingStocks from '../../Components/TopByMarketCap/TopByMarketCap'
+import Footer from '../../Components/Footer/Footer'
 // import {Logout} from './Components/logout';
 
 const Explore = () => {
-  return (
-    <AuthProvider>
-    <BrowserRouter>
-        {/* <Navigation></Navigation> */}
-        <Routes>
-          <Route path="/" element={<Navbar/>}/>
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/signup" element={<Signup/>}/>
+  // Example stock data
 
-          {/* <Route path="/logout" element={<Logout/>}/> */}
-        </Routes>
-      </BrowserRouter>
-      </AuthProvider>
-    // <div>
-    //   <Navbar></Navbar>
-    //   <Indices></Indices>
-    // </div>
+
+  return (
+    <div>
+      <IndicePrices/>
+      <Card/>
+      <TopGainers/>
+      <MainNews/>
+      <TopLosers/>
+      <MovingStocks/>
+      <Footer/>
+    </div>
   )
 }
 
-export default Explore
+export default Explore;

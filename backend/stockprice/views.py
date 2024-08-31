@@ -4,11 +4,13 @@ from rest_framework.response import Response
 from .models import StockPrice
 from .serializers import StockPriceSerializer
 import yfinance as yf
+from rest_framework.permissions import AllowAny
 
 class StockPriceViewSet(viewsets.ModelViewSet):
     queryset = StockPrice.objects.all()
     serializer_class = StockPriceSerializer
 
+    permission_classes = [AllowAny]
     @action(detail=False, methods=['get'])
     def live_prices(self, request):
         try:

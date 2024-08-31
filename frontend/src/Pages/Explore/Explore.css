@@ -1,0 +1,21 @@
+.explore-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.carousel-wrapper {
+  margin-bottom: 30px; /* Adjust this value as needed */
+  position: relative;  /* Ensure that the carousel takes its space */
+  z-index: 1;
+}
+
+.cards-wrapper {
+  margin-top: 500px;  /* Adjust this value as needed */
+  position: relative;
+  z-index: 2000;
+}
+
+/* Additional card styling to ensure no overlap */
+.card {
+  margin-bottom: 20px;
+}

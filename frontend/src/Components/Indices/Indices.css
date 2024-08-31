@@ -1,0 +1,198 @@
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+@import "../../variables.css";
+
+.main-container{
+  padding-top: 100px ;
+  margin-left: 100px;
+}
+.carousel-wrap {
+  width: 100%;
+  
+  margin: 10px auto;
+}
+.index_heading {
+  top: -30px;
+  margin-bottom: -100px;
+  
+  color: var(--head-text-color);
+}
+.index_heading h3 {
+  font-weight: var(--head-font-weight); 
+  font-size: var(--head-font-size);
+  font-family: var(--head-font);
+}
+
+.item h2 {
+  color: var(--text-color);
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+.item {
+  padding: 40px 70px;
+  /* border: 1px solid #274472;  */
+  border-radius: 12px;
+  margin: -60px 10px;
+  box-sizing: border-box; /* Ensures padding and border are included in the width */
+}
+
+.carousel-wrap h2 {
+  color: var(--text-color); /* Dark, readable color */
+  font-size: 28px;
+  margin-top: 80px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 600;
+  font-family: var(--title-font-family);
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  background: rgb(218, 203, 225, 0.3);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease,
+    backgroundcolor 0.3s ease;
+}
+.col p {
+  font-family: var(--content-font-family);
+  font-size: 11px;
+  justify-content: space-between;
+  color: black;
+}
+.col:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: hsl(266, 38%, 40%, 0.2);
+}
+
+.col h3 {
+  font-size: 20px;
+  color: #34495e;
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-family: var(--content-font-family);
+}
+
+.col .stock-change.positive {
+  color: var(--secondary-color); /* Green for positive change */
+  font-size: 11px;
+}
+
+.col .stock-change.negative {
+  color: var(--accent-color); /* Red for negative change */
+  font-size: 11px;
+}
+/* Hide the text inside the default prev arrow */
+
+.slick-list {
+  padding: 30px 0;
+}
+.slick-list .slick-slide {
+  text-align: center;
+  padding: 40px 20px;
+}
+/* .slick-list .slick-slide:nth-child(even) {
+	background-color: #ddd;
+}
+.slick-list .slick-slide:nth-child(odd) {
+	background-color: #ccc;
+} */
+
+/* Media Queries for Responsive Design */
+
+/* Mobile devices (portrait) */
+@media (max-width: 576px) {
+  .index_heading {
+    font-size: 27px;
+    margin-bottom: -10px;
+    margin-left: 15px;
+    
+    
+  }
+
+  .item {
+    padding: 20px 10px;
+    margin: -30px 5px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .col {
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  .carousel-wrap h2 {
+    text-align: center;
+    margin-top: -10px;
+    font-size: 24px;
+    overflow: hidden;
+    text-wrap: wrap;
+  }
+  .col h3 {
+    font-size: 25px;
+  }
+
+  .col .stock-change {
+    font-size: 14px;
+  }
+
+  .col .volume,
+  .col .week-range {
+    font-size: 12px;
+  }
+}
+
+/* Tablets and small screens */
+@media (min-width: 577px) and (max-width: 768px) {
+  .index_heading {
+    font-size: 30px;
+    /* margin-bottom: -70px; */
+    text-align: center;
+  }
+
+  .item {
+    padding: 25px 20px;
+    margin: -40px 10px;
+  }
+
+  .col {
+    padding: 18px;
+    margin-bottom: 20px;
+  }
+  .carousel-wrap h2 {
+    text-align: center;
+    margin-top: -10px;
+    font-size: 24px;
+    overflow: hidden;
+    text-wrap: wrap;
+  }
+
+  .col h3 {
+    font-size: 25px;
+  }
+
+  .col .stock-change {
+    font-size: 15px;
+  }
+
+  .col .volume,
+  .col .week-range {
+    font-size: 13px;
+  }
+}
+
+/* Desktop and larger screens */
