@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'stockprice',
     'indices',
     'users',
+    'news',
+    'portfolio',
+    'watchlist'
 ]
 
 CORS_ALLOWED_ORIGINS = [
