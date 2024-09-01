@@ -1,8 +1,7 @@
 from django.db import models
 
-# Create your models here.
 class StockPrice(models.Model):
-    symbol = models.CharField(max_length=10)
+    symbol = models.CharField(max_length=10, primary_key=True)  # Make symbol the primary key
     current_price = models.FloatField(null=True, blank=True)
     day_low = models.FloatField(null=True, blank=True)
     day_high = models.FloatField(null=True, blank=True)
@@ -19,4 +18,3 @@ class StockPrice(models.Model):
 
     def __str__(self):
         return f"{self.symbol} - {self.current_price}"
-    

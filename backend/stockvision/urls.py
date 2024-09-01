@@ -26,4 +26,5 @@ urlpatterns = [
     path('api/indices/', include('indices.urls')),
     path('api/news/', include('news.urls')),
     path('api/users/', include('users.urls')),
+     path('api/portfolio/', include('portfolio.urls')),
 ]
