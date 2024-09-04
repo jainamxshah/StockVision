@@ -17,6 +17,9 @@ import MainNews from '../../Components/MainNews/MainNews'
 import TopLosers from '../../Components/TopLosers/TopLosers'
 import MovingStocks from '../../Components/TopByMarketCap/TopByMarketCap'
 import Footer from '../../Components/Footer/Footer'
+import Watchlist from '../WatchList/WatchList'
+import Portfolio from'../Portfolio/Portfolio'
+
 // import {Logout} from './Components/logout';
 
 const Explore = () => {
@@ -26,12 +29,13 @@ const Explore = () => {
   return (
     <div>
       <IndicePrices/>
-      <Card/>
+      {/* <Card/> */}
       <TopGainers/>
       <MainNews/>
       <TopLosers/>
-      <MovingStocks/>
       <Footer/>
+      {/* <Watchlist/> */}
+    {/* <Portfolio/> */}
     </div>
   )
 }

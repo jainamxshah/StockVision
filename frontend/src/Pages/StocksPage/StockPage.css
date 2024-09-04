@@ -1,0 +1,72 @@
+.stockpricesSec{
+    /* background-color: var( --section-color); */
+    padding: 20px;
+  }
+  .top-cap h2 {
+    font-size: 1.2rem;
+    text-transform: capitalize;
+    font-size: var(--head-font-size);
+    color: var(--head-text-color);
+    margin-bottom: 20px;
+    width: 80%;
+    margin-top: 30px;
+    margin-left: 100px;
+  }
+  
+  .market-cap-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    margin: 40px auto;
+  }
+  
+  .market-cap-table th,
+  .market-cap-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .market-cap-table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+  }
+  
+  .market-cap-table td button.watchlist-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .market-cap-table td button.watchlist-button:hover {
+    background-color: #45a049;
+  }
+  .pagination {
+    display: flex;
+    justify-content: center; /* Center pagination buttons horizontally */
+    margin: 20px 0;
+  }
+  
+  .pagination button {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  .pagination button.active {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .pagination button:hover {
+    background-color: #ddd;
+  }
+  

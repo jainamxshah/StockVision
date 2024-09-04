@@ -1,22 +1,27 @@
-@import url("../../variables.css");
-
 /* Overall container */
-.top-Losers-container {
+.top-gainers-container {
   padding: 20px;
   max-width: 1200px;
   margin: 60px auto;
 }
 
-/* Category buttons */
-.category-buttons {
+/* Header with title and See More button */
+.header-container {
   display: flex;
-  justify-content: center;
-  margin-bottom: 60px;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.category-buttons button {
-  margin: 5px 10px;
+.top-gainers-container h2 {
+  font-size: 1.2rem;
+  text-transform: capitalize;
+  font-size: var(--head-font-size);
+  color: var(--head-text-color);
+}
+
+/* See More button */
+.see-more-button {
   padding: 10px 20px;
   border: 2px solid #007bff;
   border-radius: 5px;
@@ -27,8 +32,7 @@
   transition: background-color 0.3s, color 0.3s;
 }
 
-.category-buttons button:hover,
-.category-buttons button.active {
+.see-more-button:hover {
   background-color: #007bff;
   color: #fff;
 }
@@ -59,13 +63,7 @@
 .stock-card h3 {
   font-size: 1.2rem;
   margin-bottom: 10px;
-}
-.top-Losers-container h2 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  text-transform: capitalize;
-  font-size: var(--head-font-size);
-  color: var(--head-text-color);
+  color: #333;
 }
 
 .stock-card p {
@@ -100,11 +98,6 @@
 }
 
 @media (max-width: 480px) {
-  .category-buttons button {
-    margin: 5px;
-    padding: 8px 16px;
-  }
-
   .stock-card {
     padding: 10px;
   }
