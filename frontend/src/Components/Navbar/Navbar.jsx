@@ -16,7 +16,7 @@ const Navbar = () => {
       <div className="navbar-container">
         {/* Logo Section */}
         <div className="logo">
-          <Link to="/">
+          <Link to="/explore">
             <img
               src="https://bit.ly/3nMw3oc"
               width={148}

@@ -114,24 +114,41 @@ const IndicePrices = () => {
                   slide.data.map((stock, index) => (
                     <div className="col" key={index}>
                       <h3>{stock.name}</h3>
-                      <p>Current Price: {roundToTwo(stock.current_price)}</p>
+                      <hr />
+                      <p>
+                        <span>Current Price:</span>{" "}
+                        <span>{roundToTwo(stock.current_price)}</span>
+                      </p>
+                      <hr />
                       <p
                         className={getStockChangeClass(
                           stock.current_price - stock.previous_close
                         )}
                       >
-                        Change:{" "}
-                        {roundToTwo(stock.current_price - stock.previous_close)}
-                        (
-                        {roundToTwo(
-                          ((stock.current_price - stock.previous_close) /
-                            stock.previous_close) *
-                            100
-                        )}
-                        %)
+                        <span>Change:</span>{" "}
+                        <span>
+                          {roundToTwo(
+                            stock.current_price - stock.previous_close
+                          )}{" "}
+                          (
+                          {roundToTwo(
+                            ((stock.current_price - stock.previous_close) /
+                              stock.previous_close) *
+                              100
+                          )}
+                          %)
+                        </span>
                       </p>
-                      <p>Day Low: {roundToTwo(stock.day_low)}</p>
-                      <p>Day High: {roundToTwo(stock.day_high)}</p>
+                      <hr />
+                      <p>
+                        <span>Day Low:</span>{" "}
+                        <span>{roundToTwo(stock.day_low)}</span>
+                      </p>
+                      <hr />
+                      <p>
+                        <span>Day High:</span>{" "}
+                        <span>{roundToTwo(stock.day_high)}</span>
+                      </p>
                     </div>
                   ))
                 ) : (

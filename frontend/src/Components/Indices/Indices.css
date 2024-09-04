@@ -8,13 +8,11 @@
 }
 .carousel-wrap {
   width: 100%;
-  
   margin: 10px auto;
 }
 .index_heading {
-  top: -30px;
+  margin-top: -30px;
   margin-bottom: -100px;
-  
   color: var(--head-text-color);
 }
 .index_heading h3 {
@@ -109,6 +107,58 @@
 .slick-list .slick-slide:nth-child(odd) {
 	background-color: #ccc;
 } */
+
+.col {
+  display: flex;
+  flex-direction: column;
+  background: rgba(218, 203, 225, 0.3);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.col h3 {
+  font-size: 20px;
+  color: #34495e;
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-family: var(--content-font-family);
+  text-align: center;
+}
+
+.col hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 10px 0;
+}
+
+.col p {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--content-font-family);
+  font-size: 13px;
+  color: black;
+  margin: 5px 0;
+}
+
+.col p span {
+  display: inline-block;
+  min-width: 100px;
+}
+
+.col .stock-change {
+  font-weight: bold;
+}
+
+.col .stock-change.positive {
+  color: var(--secondary-color); /* Green for positive change */
+}
+
+.col .stock-change.negative {
+  color: var(--accent-color); /* Red for negative change */
+}
 
 /* Media Queries for Responsive Design */
 
