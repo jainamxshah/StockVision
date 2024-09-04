@@ -1,0 +1,175 @@
+.stock-dashboard {
+    max-width: 900px;
+    margin-left: 0px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border: 2px solid #6a0dad;
+}
+
+.left-container {
+    background-color: #f3f3f3;
+    padding: 20px;
+    width: 30%;
+    height: 500px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.right-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    width: 70%;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+
+.stock-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+.stock-name {
+    font-size: 35px;
+    color: #4b0082;
+}
+
+.price-details {
+    display: flex;
+    align-items: center;
+}
+
+.current-price {
+    font-size: 30px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.price-change {
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.price-change.positive {
+    color: green;
+}
+
+.price-change.negative {
+    color: red;
+}
+
+.timeframe {
+    font-size: 12px;
+    color: #888;
+}
+
+.graph-section {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f8f8f8;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+}
+
+.graph-container {
+    margin-top: 20px;
+    padding-top: 20px;
+    width: "70%";
+    height: "30%";
+    margin: "auto";
+    border-top: 1px solid #ddd;
+    
+}
+
+.graph-placeholder {
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #aaa;
+}
+
+.performance-metrics {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.metric {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.metric span {
+    color: #4b0082;
+    font-weight: bolder;
+}
+
+.slider-range {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background-color: #ddd;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.range-marker {
+    position: absolute;
+    top: -4px;
+    width: 10px;
+    height: 10px;
+    background-color: #333;
+    border-radius: 50%;
+}
+
+.additional-metrics {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.additional-metrics .metric {
+    flex: 1;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.button-container {
+    display: flex;
+    gap: 5px;
+    margin: 2px 0;
+    justify-content: left;
+}
+
+.time-button {
+    border: none;
+    color: #888;
+    padding: 5px 10px;
+    font-size: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.time-button:hover {
+    background-color: #6a0dad;
+}
