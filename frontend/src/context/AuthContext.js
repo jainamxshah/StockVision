@@ -82,6 +82,7 @@ export const AuthProvider = ({ children }) => {
             try {
                 const decoded = jwtDecode(accessToken);
                 setUser(decoded);
+                setIsAuth(true);
             } catch (error) {
                 console.error('Token decoding error', error);
                 logout(); // Logout if token is invalid
@@ -108,7 +109,10 @@ export const AuthProvider = ({ children }) => {
 
     const signup = async (username, email, password) => {
         try {
-            const response = await axios.post('http://localhost:8000/api/users/signup/', { username, email, password });
+            const response = await axios.post('http://127.0.0.1:8000/api/users/signup/', { username, email, password },
+                { headers: { 'Content-Type': 'application/json' } }
+            );
+            
             return response;
         } catch (error) {
             console.error('Signup error', error);

@@ -28,15 +28,15 @@ const Explore = () => {
 
   return (
     <div>
-      {/* <IndicePrices/> */}
+      <IndicePrices/> 
       {/* <Card/> */}
-      {/* <TopGainers/>
+      <TopGainers/>
       <MainNews/>
       <TopLosers/>
-      <Footer/> */}
-      {/* <Watchlist/> */}
+      <Footer/>
+      {/* {/* <Watchlist/> */}
     {/* <Portfolio/> */}
-    <StockDetails/>
+    {/* <StockDetails/> */}
     </div>
   )
 }

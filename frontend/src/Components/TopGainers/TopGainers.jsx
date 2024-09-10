@@ -58,7 +58,9 @@ const TopGainers = () => {
       </div>
 
       <div className="stock-cards">
+        
         {sampleStocks.map((stock) => (
+          <a href="/stock">
           <div key={stock.id} className="stock-card">
             <h3>{stock.name}</h3>
             <p>Current Price: ₹{stock.current_price}</p>
@@ -66,7 +68,9 @@ const TopGainers = () => {
               Change: {stock.change} ({stock.percentageChange}%)
             </p>
           </div>
+          </a>
         ))}
+        
       </div>
     </div>
   );

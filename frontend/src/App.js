@@ -9,6 +9,13 @@ import Explore from "./Pages/Explore/Explore";
 import IndicePrices from "./Components/Indices/Indices";
 import SignUp from "./Components/auth/Signup";
 import StockPage from "./Pages/StocksPage/StockPage";
+import StockDetails from "./Pages/StockDetails/StockDetails";
+import News from "./Pages/News/NewsCard";
+import IndicesDetailed from "./Pages/IndicesDetailed/IndicesDetailed";
+import Watchlist from "./Pages/WatchList/Watchlist";
+import Portfolio from "./Pages/Portfolio/portfolio";
+
+
 
 function App() {
   return (
@@ -25,6 +32,13 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/stocks/top-gainers" element={<StockPage />} />
             <Route path="/stocks/top-losers" element={<StockPage />} />
+            <Route path="/stock" element={<StockDetails />} />
+            <Route path="/news" element={<News/>} />
+            <Route path="/indices" element={<IndicesDetailed/>} />
+            <Route path="/user/watchlist" element={<Watchlist/>} />
+            <Route path="/user/portfolio" element={<Portfolio/>} />
+
+
           </Routes>
         </Router>
       </AuthProvider>
