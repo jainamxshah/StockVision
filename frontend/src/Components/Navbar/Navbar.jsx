@@ -45,6 +45,7 @@ const Navbar = () => {
           {/* Navigation Links Section */}
           <div className="nav-links">
             <Link to="/explore">Explore</Link>
+
           </div>
 
           {/* User Section */}
@@ -52,10 +53,10 @@ const Navbar = () => {
             {isAuth ? (
               <>
                 <div className="nav-links">
-                  <Link to="/portfolio" className="nav-links">
+                  <Link to="/user/portfolio" className="nav-links">
                     Portfolio
                   </Link>
-                  <Link to="/watchlist" className="nav-links">
+                  <Link to="/user/watchlist" className="nav-links">
                     Watchlist
                   </Link>
                 </div>

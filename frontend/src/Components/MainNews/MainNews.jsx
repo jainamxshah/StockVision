@@ -1,6 +1,6 @@
 import React from "react";
 import "./MainNews.css";
-
+import { useNavigate } from "react-router-dom";
 const MainNews = ({ news }) => {
   const stockNews = [
     {
@@ -40,15 +40,21 @@ const MainNews = ({ news }) => {
       url: "#",
     },
   ];
+  const navigate = useNavigate();
+
+  const handleSeeMore = () => {
+    navigate("/news");
+  };
 
   return (
     <div className="stock-news-section">
       <div className="stock-news-header">
         <h2>Stocks in News</h2>
-        <button className="news-button">News</button>
+        <button className="news-button" onClick={handleSeeMore}>News</button>
       </div>
       <div className="news-cards">
         {stockNews.map((item) => (
+          <a href="/news">
           <div key={item.id} className="news-card">
             <h3>{item.title}</h3>
             <p>{item.date}</p>
@@ -60,6 +66,7 @@ const MainNews = ({ news }) => {
               Read more
             </a>
           </div>
+          </a>
         ))}
       </div>
     </div>

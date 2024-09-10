@@ -51,7 +51,7 @@ const TopLosers = () => {
   return (
     <div className="top-gainers-container">
       <div className="header-container">
-        <h2>Top Gainers</h2>
+        <h2>Top Losers</h2>
         <button className="see-more-button" onClick={handleSeeMore}>
           See More
         </button>
@@ -59,6 +59,7 @@ const TopLosers = () => {
 
       <div className="stock-cards">
         {sampleStocks.map((stock) => (
+          <a href="/stock">
           <div key={stock.id} className="stock-card">
             <h3>{stock.name}</h3>
             <p>Current Price: ₹{stock.current_price}</p>
@@ -66,6 +67,7 @@ const TopLosers = () => {
               Change: {stock.change} ({stock.percentageChange}%)
             </p>
           </div>
+          </a>
         ))}
       </div>
     </div>

@@ -2,6 +2,9 @@
 @import "~slick-carousel/slick/slick-theme.css";
 @import "../../variables.css";
 
+a{
+  text-decoration: none;
+}
 .main-container{
   padding-top: 100px ;
   margin-left: 100px;
