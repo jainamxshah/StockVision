@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 @require_http_methods(["GET"])
-def stock_data(request):
+def stock_graph_data(request):
     stock_name = request.GET.get('stockname')
     period = request.GET.get('period')
 
