@@ -5,12 +5,17 @@ from rest_framework.permissions import AllowAny
 from .models import StockPrice
 from .serializers import StockPriceSerializer
 import yfinance as yf
+<<<<<<< HEAD
 from operator import itemgetter
+=======
+from rest_framework.permissions import AllowAny
+>>>>>>> Routing_IndicesPage
 
 class StockPriceViewSet(viewsets.ModelViewSet):
     queryset = StockPrice.objects.all()
     serializer_class = StockPriceSerializer
 
+<<<<<<< HEAD
     def fetch_stock_data(self, symbol):
         """Helper function to fetch stock data."""
         try:
@@ -46,6 +51,10 @@ class StockPriceViewSet(viewsets.ModelViewSet):
             return {'symbol': symbol, 'error': str(e)}
 
     @action(detail=False, methods=['get'], permission_classes=[AllowAny])
+=======
+    permission_classes = [AllowAny]
+    @action(detail=False, methods=['get'])
+>>>>>>> Routing_IndicesPage
     def live_prices(self, request):
         try:
             # List of stock symbols

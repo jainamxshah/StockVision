@@ -1,33 +1,23 @@
 import React, { useState } from 'react';
-import './StockPage.css'; // Make sure this file includes your CSS styles
+import './TopByMarketCap.css'; // Make sure this file includes your CSS styles
 
 const stocks = [
-    { company: "RELIANCE.NS", price: "₹2500", volume: "1.5M" }, 
-    { company: "TCS.NS", price: "₹3500", volume: "2.3M" },
-    { company: "HDFCBANK.NS", price: "₹1600", volume: "1.1M" }, 
-    { company: "INFY.NS", price: "₹1200", volume: "2.0M" },
-    { company: "ICICIBANK.NS", price: "₹900", volume: "900K" }, 
-    { company: "KOTAKBANK.NS", price: "₹1800", volume: "1.3M" },
-    { company: "SBIN.NS", price: "₹600", volume: "2.1M" }, 
-    { company: "LT.NS", price: "₹2500", volume: "800K" },
-    { company: "ITC.NS", price: "₹300", volume: "1.9M" }, 
-    { company: "AXISBANK.NS", price: "₹700", volume: "1.2M" },
-    { company: "M&M.NS", price: "₹900", volume: "950K" }, 
-    { company: "HINDUNILVR.NS", price: "₹2500", volume: "700K" },
-    { company: "BAJFINANCE.NS", price: "₹4000", volume: "1.4M" }, 
-    { company: "SUNPHARMA.NS", price: "₹600", volume: "1.0M" },
-    { company: "ONGC.NS", price: "₹150", volume: "2.2M" }, 
-    { company: "TATAMOTORS.NS", price: "₹500", volume: "1.8M" },
-    { company: "ADANIGREEN.NS", price: "₹700", volume: "1.1M" }, 
-    { company: "TATASTEEL.NS", price: "₹800", volume: "1.7M" },
-    { company: "BHARTIARTL.NS", price: "₹750", volume: "1.6M" }, 
-    { company: "DIVISLAB.NS", price: "₹3000", volume: "650K" },
-    { company: "HDFCLIFE.NS", price: "₹600", volume: "1.9M" }
+    { company: "RELIANCE.NS", price: "₹2500" }, { company: "TCS.NS", price: "₹3500" },
+    { company: "HDFCBANK.NS", price: "₹1600" }, { company: "INFY.NS", price: "₹1200" },
+    { company: "ICICIBANK.NS", price: "₹900" }, { company: "KOTAKBANK.NS", price: "₹1800" },
+    { company: "SBIN.NS", price: "₹600" }, { company: "LT.NS", price: "₹2500" },
+    { company: "ITC.NS", price: "₹300" }, { company: "AXISBANK.NS", price: "₹700" },
+    { company: "M&M.NS", price: "₹900" }, { company: "HINDUNILVR.NS", price: "₹2500" },
+    { company: "BAJFINANCE.NS", price: "₹4000" }, { company: "SUNPHARMA.NS", price: "₹600" },
+    { company: "ONGC.NS", price: "₹150" }, { company: "TATAMOTORS.NS", price: "₹500" },
+    { company: "ADANIGREEN.NS", price: "₹700" }, { company: "TATASTEEL.NS", price: "₹800" },
+    { company: "BHARTIARTL.NS", price: "₹750" }, { company: "DIVISLAB.NS", price: "₹3000" },
+    { company: "HDFCLIFE.NS", price: "₹600" }
 ];
 
 const stocksPerPage = 5; // Number of stocks to display per page
 
-const StockPage = () => {
+const TopByMarketCap = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     // Calculate the indices for the current page
@@ -51,7 +41,6 @@ const StockPage = () => {
                     <tr>
                         <th style={{ textAlign: 'left' }}>Company</th>
                         <th style={{ textAlign: 'center' }}>Market Price</th>
-                        <th style={{ textAlign: 'center' }}>Volume</th>
                         <th>Watchlist</th>
                     </tr>
                 </thead>
@@ -60,7 +49,6 @@ const StockPage = () => {
                         <tr key={index}>
                             <td style={{ textAlign: 'left' }}>{item.company}</td>
                             <td style={{ textAlign: 'center' }}>{item.price}</td>
-                            <td style={{ textAlign: 'center' }}>{item.volume}</td>
                             <td>
                                 <button className="watchlist-button">+</button>
                             </td>
@@ -83,4 +71,4 @@ const StockPage = () => {
     );
 };
 
-export default StockPage;
+export default TopByMarketCap;

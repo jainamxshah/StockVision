@@ -11,9 +11,9 @@ function Navigation() {
      return ( 
       <div>
         <Navbar bg="dark" variant="dark">
-          <Navbar.Brand href="/">JWT Authentification</Navbar.Brand>            
+          <Navbar.Brand href="/explore">JWT Authentification</Navbar.Brand>            
           <Nav className="me-auto"> 
-          {isAuth ? <Nav.Link href="/">Home</Nav.Link> : null}
+          {isAuth ? <Nav.Link href="/explore">Home</Nav.Link> : null}
           </Nav>
           <Nav>
           {isAuth ? <Nav.Link href="/logout">Logout</Nav.Link> :  
