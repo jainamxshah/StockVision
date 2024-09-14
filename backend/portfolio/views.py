@@ -14,6 +14,7 @@ class PortfolioViewSet(viewsets.ModelViewSet):
     def list_companies(self, request):
         portfolios = Portfolio.objects.filter(user=request.user)
         result = []
+        total_profit_loss = 0  # Variable to accumulate total profit/loss
 
         for portfolio in portfolios:
             stock_name = portfolio.stock_name
@@ -34,6 +35,7 @@ class PortfolioViewSet(viewsets.ModelViewSet):
             quantity = portfolio.quantity
             change_percent = ((current_price - price_bought) / price_bought) * 100 if price_bought else 0
             profit_loss = (current_price - price_bought) * quantity
+            total_profit_loss += profit_loss  # Accumulate total profit/loss
 
             result.append({
                 'stock_name': stock_name,
@@ -44,7 +46,17 @@ class PortfolioViewSet(viewsets.ModelViewSet):
                 'profit_loss': profit_loss,
             })
 
-        return Response(result, status=status.HTTP_200_OK)
+        # Sort the result by profit/loss in descending order
+        result = sorted(result, key=lambda x: x['profit_loss'], reverse=True)
+
+        # Include the total profit/loss in the response
+        response_data = {
+            'total_profit_loss': total_profit_loss,
+            'companies': result
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+
 
     @action(detail=False, methods=['post'], url_path='add-stock')
     def add_stock(self, request):

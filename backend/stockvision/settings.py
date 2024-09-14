@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'users',
     'news',
     'portfolio',
-    'watchlist'
+    'watchlist',
+    'stockgraph'
 ]
 
 CORS_ALLOWED_ORIGINS = [

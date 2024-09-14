@@ -5,12 +5,46 @@ from rest_framework.permissions import AllowAny
 from .models import StockPrice
 from .serializers import StockPriceSerializer
 import yfinance as yf
+from operator import itemgetter
 
 class StockPriceViewSet(viewsets.ModelViewSet):
     queryset = StockPrice.objects.all()
     serializer_class = StockPriceSerializer
-    
-    # This action allows anyone (authenticated or not) to access the live_prices endpoint
+
+    def fetch_stock_data(self, symbol):
+        """Helper function to fetch stock data."""
+        try:
+            stock = yf.Ticker(symbol)
+            history = stock.history(period="5d")
+            info = stock.info
+
+            if not history.empty:
+                current_price = history['Close'].iloc[-1]
+                previous_close = history['Close'].iloc[-2] if len(history) > 1 else None
+                percent_change = ((current_price - previous_close) / previous_close) * 100 if previous_close else None
+
+                stock_data = {
+                    'symbol': symbol,
+                    'current_price': current_price,
+                    'day_low': history['Low'].min(),
+                    'day_high': history['High'].max(),
+                    'previous_close': previous_close,
+                    'open_price': history['Open'].iloc[-1],
+                    'volume': history['Volume'].iloc[-1],
+                    'market_cap': info.get('marketCap', 'N/A'),
+                    'dividend_yield': info.get('dividendYield', 'N/A'),
+                    'fifty_two_week_high': info.get('fiftyTwoWeekHigh', 'N/A'),
+                    'fifty_two_week_low': info.get('fiftyTwoWeekLow', 'N/A'),
+                    'beta': info.get('beta', 'N/A'),
+                    'last_dividend': info.get('lastDividendValue', 'N/A'),
+                    'percent_change': percent_change
+                }
+                return stock_data
+            else:
+                return {'symbol': symbol, 'error': 'No data available'}
+        except Exception as e:
+            return {'symbol': symbol, 'error': str(e)}
+
     @action(detail=False, methods=['get'], permission_classes=[AllowAny])
     def live_prices(self, request):
         try:
@@ -23,62 +57,34 @@ class StockPriceViewSet(viewsets.ModelViewSet):
                 "BHARTIARTL.NS", "DIVISLAB.NS", "HDFCLIFE.NS"
             ]
 
-            data = {}
-            for symbol in stocks:
-                stock = yf.Ticker(symbol)
-                history = stock.history(period="5d")
-                info = stock.info
+            data = [self.fetch_stock_data(symbol) for symbol in stocks]
 
-                if not history.empty:
-                    data[symbol] = {
-                        'current_price': history['Close'].iloc[-1],
-                        'day_low': history['Low'].min(),
-                        'day_high': history['High'].max(),
-                        'previous_close': history['Close'].iloc[-2] if len(history) > 1 else None,
-                        'open_price': history['Open'].iloc[-1],
-                        'volume': history['Volume'].iloc[-1],
-                        'market_cap': info.get('marketCap'),
-                        'dividend_yield': info.get('dividendYield'),
-                        'fifty_two_week_high': info.get('fiftyTwoWeekHigh'),
-                        'fifty_two_week_low': info.get('fiftyTwoWeekLow'),
-                        'beta': info.get('beta'),
-                        'last_dividend': info.get('lastDividendValue')
-                    }
-                else:
-                    data[symbol] = {'error': 'No data available'}
-            
-            return Response(data)
+            # Filter out stocks with no percent change data
+            data = [d for d in data if d.get('percent_change') is not None]
+
+            # Get sort parameter from the query params
+            sort_order = request.query_params.get('sort', 'change-asc').lower()
+
+            if sort_order == 'change-desc':
+                sorted_data = sorted(data, key=itemgetter('percent_change'), reverse=True)
+            elif sort_order == 'change-asc':
+                sorted_data = sorted(data, key=itemgetter('percent_change'))
+            elif sort_order == 'volume-desc':
+                sorted_data = sorted(data, key=itemgetter('volume'), reverse=True)
+            else:  # Default sort by volume (ascending)
+                sorted_data = sorted(data, key=itemgetter('volume'))
+
+            return Response(sorted_data)
         except Exception as e:
             return Response({'error': str(e)}, status=500)
 
     @action(detail=True, methods=['get'], permission_classes=[AllowAny], url_path='details')
     def stock_details(self, request, pk=None):
         try:
-            # The pk parameter will now hold the symbol passed in the URL
             symbol = pk.upper()
-            stock = yf.Ticker(symbol)
-            history = stock.history(period="5d")
-            info = stock.info
-
-            if not history.empty:
-                data = {
-                    'symbol': symbol,
-                    'current_price': history['Close'].iloc[-1],
-                    'day_low': history['Low'].min(),
-                    'day_high': history['High'].max(),
-                    'previous_close': history['Close'].iloc[-2] if len(history) > 1 else None,
-                    'open_price': history['Open'].iloc[-1],
-                    'volume': history['Volume'].iloc[-1],
-                    'market_cap': info.get('marketCap'),
-                    'dividend_yield': info.get('dividendYield'),
-                    'fifty_two_week_high': info.get('fiftyTwoWeekHigh'),
-                    'fifty_two_week_low': info.get('fiftyTwoWeekLow'),
-                    'beta': info.get('beta'),
-                    'last_dividend': info.get('lastDividendValue')
-                }
-            else:
-                data = {'error': f'No data available for the symbol: {symbol}'}
-            
+            data = self.fetch_stock_data(symbol)
+            if 'error' in data:
+                return Response({'error': data['error']}, status=400)
             return Response(data)
         except Exception as e:
             return Response({'error': str(e)}, status=500)
@@ -89,30 +95,11 @@ class StockPriceViewSet(viewsets.ModelViewSet):
             symbol = request.query_params.get('symbol', '').upper()
             if not symbol:
                 return Response({'error': 'No stock symbol provided'}, status=400)
-            
-            stock = yf.Ticker(symbol)
-            history = stock.history(period="5d")
-            info = stock.info
-            
-            data = {
-                'symbol': symbol,
-                'current_price': history['Close'].iloc[-1] if not history.empty else None,
-                'day_low': history['Low'].min() if not history.empty else None,
-                'day_high': history['High'].max() if not history.empty else None,
-                'previous_close': history['Close'].iloc[-2] if len(history) > 1 else None,
-                'open_price': history['Open'].iloc[-1] if not history.empty else None,
-                'volume': history['Volume'].iloc[-1] if not history.empty else None,
-                'market_cap': info.get('marketCap'),
-                'dividend_yield': info.get('dividendYield'),
-                'fifty_two_week_high': info.get('fiftyTwoWeekHigh'),
-                'fifty_two_week_low': info.get('fiftyTwoWeekLow'),
-                'beta': info.get('beta'),
-                'last_dividend': info.get('lastDividendValue')
-            }
-            
-            if data['current_price'] is None:
-                data['error'] = 'No data available for the symbol'
-            
+
+            data = self.fetch_stock_data(symbol)
+            if 'error' in data:
+                return Response({'error': data['error']}, status=400)
+
             return Response(data)
         except Exception as e:
             return Response({'error': str(e)}, status=500)
