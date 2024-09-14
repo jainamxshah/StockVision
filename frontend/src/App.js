@@ -12,7 +12,7 @@ import StockPage from "./Pages/StocksPage/StockPage";
 import StockDetails from "./Pages/StockDetails/StockDetails";
 import News from "./Pages/News/NewsCard";
 import IndicesDetailed from "./Pages/IndicesDetailed/IndicesDetailed";
-import Watchlist from "./Pages/WatchList/Watchlist";
+import Watchlist from "./Pages/WatchList/watchlist"
 import Portfolio from "./Pages/Portfolio/portfolio";
 
 
