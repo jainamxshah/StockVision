@@ -1,7 +1,7 @@
 // src/StockMarket.js
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import './portfolio.css'; 
+import './Portfolio.css'; 
 import { Container, Row, Col } from 'react-bootstrap';
 import { FaChevronDown, FaTimes } from 'react-icons/fa';
 
