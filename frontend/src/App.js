@@ -7,10 +7,11 @@ import Login from "./Components/auth/Login";
 import Navbar from "./Components/Navbar/Navbar";
 import Explore from "./Pages/Explore/Explore";
 import IndicePrices from "./Components/Indices/Indices";
+import TopGainersStockPage from "./Components/TopGainers/TopGainersStockPage";
 import SignUp from "./Components/auth/Signup";
 import StockPage from "./Pages/StocksPage/StockPage";
 import StockDetails from "./Pages/StockDetails/StockDetails";
-import News from "./Pages/News/NewsCard";
+import News from "./Pages/News/News";
 import IndicesDetailed from "./Pages/IndicesDetailed/IndicesDetailed";
 import Watchlist from "./Pages/WatchList/watchlist"
 import Portfolio from "./Pages/Portfolio/portfolio";
@@ -30,9 +31,9 @@ function App() {
             <Route path="/explore" element={<Explore />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/stocks/top-gainers" element={<StockPage />} />
+            <Route path="/stocks/top-gainers" element={<TopGainersStockPage />} />
             <Route path="/stocks/top-losers" element={<StockPage />} />
-            <Route path="/stock" element={<StockDetails />} />
+            <Route path="/stock/:symbol" element={<StockDetails />} />
             <Route path="/news" element={<News/>} />
             <Route path="/indices" element={<IndicesDetailed/>} />
             <Route path="/user/watchlist" element={<Watchlist/>} />

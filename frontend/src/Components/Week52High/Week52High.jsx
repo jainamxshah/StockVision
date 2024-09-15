@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./TopLosers.css";
+import "./Week52High.css";
 
-const TopLosers = () => {
+const Week52High = () => {
     const navigate = useNavigate();
     const [stocks, setStocks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     const handleSeeMore = () => {
-        navigate("/stocks/top-losers");
+        navigate("/stocks/week-52-high");
     };
 
     // Fetch live stock data from the API
@@ -45,9 +45,9 @@ const TopLosers = () => {
     }
 
     return (
-        <div className="top-losers-container">
+        <div className="week-52-high-container">
             <div className="header-container">
-                <h2>Top Losers</h2>
+                <h2>52 Week High</h2>
                 <button className="see-more-button" onClick={handleSeeMore}>
                     See More
                 </button>
@@ -73,4 +73,4 @@ const TopLosers = () => {
     );
 };
 
-export default TopLosers;
+export default Week52High;
