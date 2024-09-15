@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./TopLosers.css";
+import "./ActiveByVolume.css";
 
-const TopLosers = () => {
+const ActiveByVolume = () => {
     const navigate = useNavigate();
     const [stocks, setStocks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     const handleSeeMore = () => {
-        navigate("/stocks/top-losers");
+        navigate("/stocks/active-by-volume");
     };
 
     // Fetch live stock data from the API
     useEffect(() => {
         const fetchStockData = async () => {
             try {
-                const response = await fetch("http://127.0.0.1:8000/api/stockprice/stock-prices/live_prices/?sort=change-asc"); // Replace with your actual API endpoint
+                const response = await fetch("http://127.0.0.1:8000/api/stockprice/stock-prices/live_prices/?sort=volume-desc"); // Replace with your actual API endpoint
                 if (!response.ok) {
                     throw new Error("Failed to fetch stock data");
                 }
@@ -45,9 +45,9 @@ const TopLosers = () => {
     }
 
     return (
-        <div className="top-losers-container">
+        <div className="active-by-volume-container">
             <div className="header-container">
-                <h2>Top Losers</h2>
+                <h2>Active By Volume</h2>
                 <button className="see-more-button" onClick={handleSeeMore}>
                     See More
                 </button>
@@ -73,4 +73,4 @@ const TopLosers = () => {
     );
 };
 
-export default TopLosers;
+export default ActiveByVolume;

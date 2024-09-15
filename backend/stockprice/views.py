@@ -5,17 +5,12 @@ from rest_framework.permissions import AllowAny
 from .models import StockPrice
 from .serializers import StockPriceSerializer
 import yfinance as yf
-<<<<<<< HEAD
 from operator import itemgetter
-=======
-from rest_framework.permissions import AllowAny
->>>>>>> Routing_IndicesPage
 
 class StockPriceViewSet(viewsets.ModelViewSet):
     queryset = StockPrice.objects.all()
     serializer_class = StockPriceSerializer
 
-<<<<<<< HEAD
     def fetch_stock_data(self, symbol):
         """Helper function to fetch stock data."""
         try:
@@ -30,6 +25,7 @@ class StockPriceViewSet(viewsets.ModelViewSet):
 
                 stock_data = {
                     'symbol': symbol,
+                    'name': info['shortName'],
                     'current_price': current_price,
                     'day_low': history['Low'].min(),
                     'day_high': history['High'].max(),
@@ -51,10 +47,6 @@ class StockPriceViewSet(viewsets.ModelViewSet):
             return {'symbol': symbol, 'error': str(e)}
 
     @action(detail=False, methods=['get'], permission_classes=[AllowAny])
-=======
-    permission_classes = [AllowAny]
-    @action(detail=False, methods=['get'])
->>>>>>> Routing_IndicesPage
     def live_prices(self, request):
         try:
             # List of stock symbols
@@ -87,28 +79,4 @@ class StockPriceViewSet(viewsets.ModelViewSet):
         except Exception as e:
             return Response({'error': str(e)}, status=500)
 
-    @action(detail=True, methods=['get'], permission_classes=[AllowAny], url_path='details')
-    def stock_details(self, request, pk=None):
-        try:
-            symbol = pk.upper()
-            data = self.fetch_stock_data(symbol)
-            if 'error' in data:
-                return Response({'error': data['error']}, status=400)
-            return Response(data)
-        except Exception as e:
-            return Response({'error': str(e)}, status=500)
-
-    @action(detail=False, methods=['get'], permission_classes=[AllowAny], url_path='stock-data')
-    def get_stock_data(self, request):
-        try:
-            symbol = request.query_params.get('symbol', '').upper()
-            if not symbol:
-                return Response({'error': 'No stock symbol provided'}, status=400)
-
-            data = self.fetch_stock_data(symbol)
-            if 'error' in data:
-                return Response({'error': data['error']}, status=400)
-
-            return Response(data)
-        except Exception as e:
-            return Response({'error': str(e)}, status=500)
+    
