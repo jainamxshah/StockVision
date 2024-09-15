@@ -1,0 +1,25 @@
+/* variables.css */
+:root {
+  --primary-color: #2c3e50;
+  --secondary-color: #27ae60;
+  --accent-color: #e74c3c;
+  --background-color: #f0f3f4;
+  --head-text-color: #592a50;
+  --text-color: #603F8B;
+  --light-text-color: #95a5a6;
+  --card-background: rgb(218, 203, 225, 0.3);
+  --hover-background: hsla(266, 38%, 40%, 0.2);
+  --head-font:"Montserrat", sans-serif;
+  --title-font-family: "Open Sans", sans-serif;
+  --content-font-family: "Poppins", sans-serif;
+  --card-border-color : #592a50;
+  --head-font-size : 2rem;
+  --head-font-weight : 600;
+  --section-color:#d3bbdd;
+
+}
+
+body {
+  background-color: hsla(267, 58%, 88%, 0.2);
+}
+/* Pasture of Dreams */
