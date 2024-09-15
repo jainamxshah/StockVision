@@ -29,13 +29,10 @@ class IndicePriceViewSet(viewsets.ModelViewSet):
                     data[symbol] = {
                         'symbol': symbol,
                         'name': info.get('shortName'),
-                        'current_price': history['Close'].iloc[-1],'day_low': history['Low'].min(),
+                        'current_price': history['Close'].iloc[-1],
+                        'day_low': history['Low'].min(),
                         'day_high': history['High'].max(),
-                        'previous_close': history['Close'].iloc[-2] if len(history) > 1 else None,
-                        'open': history['Open'].iloc[-1],
-                        'volume': history['Volume'].iloc[-1],
-                        'day_range': f"{history['Low'].iloc[-1]} - {history['High'].iloc[-1]}",
-                        'fifty_two_week_range': f"{info.get('fiftyTwoWeekHigh')}-{info.get('fiftyTwoWeekHigh')}",
+                        'previous_close': history['Close'].iloc[-2] if len(history) > 1 else None
                     }
                     # Update or create stock price record
                     IndicePrice.objects.update_or_create(symbol=symbol, defaults=data[symbol])
