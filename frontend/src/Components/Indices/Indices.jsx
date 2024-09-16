@@ -107,7 +107,7 @@ const IndicePrices = () => {
       <div className="carousel-wrap">
         <Slider {...settings}>
           {slides.map((slide, slideIndex) => (
-            <a href="/indices">
+            <a href="/indices/">
             <div key={slideIndex} className="item">
               <h2 className="title">{slide.title.toUpperCase()}</h2>
               <div className="row">

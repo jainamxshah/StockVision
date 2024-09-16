@@ -81,10 +81,17 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'USER_ID_FIELD': 'id',  # Use your custom field if needed
+    'USER_ID_CLAIM': 'user_id',  # Claim that holds user ID in the token
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),  # Set access token to 2 hours
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=2),  # Set refresh token to 2 days
     'AUTH_HEADER_TYPES': ('Bearer',),
+    'ROTATE_REFRESH_TOKENS': True,  # Optionally rotate refresh tokens
+    'BLACKLIST_AFTER_ROTATION': True,  # Blacklist old tokens after rotation
 }
+
+
+AUTH_USER_MODEL = 'users.User'
 
 # myproject/settings.py
 

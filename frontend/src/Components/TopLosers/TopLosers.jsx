@@ -16,7 +16,7 @@ const TopLosers = () => {
     useEffect(() => {
         const fetchStockData = async () => {
             try {
-                const response = await fetch("http://127.0.0.1:8000/api/stockprice/stock-prices/live_prices/?sort=change-asc"); // Replace with your actual API endpoint
+                const response = await fetch("http://127.0.0.1:8000/api/stockprice/stock-prices/live_prices/?sort=top-losers"); // Replace with your actual API endpoint
                 if (!response.ok) {
                     throw new Error("Failed to fetch stock data");
                 }

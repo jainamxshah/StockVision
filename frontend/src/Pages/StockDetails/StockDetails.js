@@ -9,6 +9,7 @@ const StockDetails = () => {
     const [stockData, setStockData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [period, setPeriod] = useState('1d'); // Default period is '1D'
 
     useEffect(() => {
         const fetchStockData = async () => {
@@ -55,6 +56,10 @@ const StockDetails = () => {
         returns = {}
     } = stockData;
 
+    const handlePeriodChange = (newPeriod) => {
+        setPeriod(newPeriod);
+    };
+
     return (
         <div>
             <div className="container">
@@ -67,38 +72,39 @@ const StockDetails = () => {
                             <span className={`price-change ${priceChange >= 0 ? 'positive' : 'negative'}`}>
                                 {priceChange >= 0 ? `+${priceChange}` : priceChange} ({percent_change >= 0 ? `+${percent_change}` : percent_change}%)
                             </span>
-                            <span className="timeframe">1D</span>
                         </div>
                     </div>
 
                     <div className="graph-section">
-                        <div className="graph-placeholder"><Graph /></div>
+                        <div className="graph-placeholder">
+                            <Graph symbol={symbol} period={period} />
+                        </div>
                     </div>
 
                     <div className="button-container row">
                         <div className="col">
-                            <button className="time-button">1D</button>
+                            <button className="time-button" onClick={() => handlePeriodChange('1d')}>1D</button>
                         </div>
                         <div className="col">
-                            <button className="time-button">5D</button>
+                            <button className="time-button" onClick={() => handlePeriodChange('5d')}>5D</button>
                         </div>
                         <div className="col">
-                            <button className="time-button">1MO</button>
+                            <button className="time-button" onClick={() => handlePeriodChange('1mo')}>1MO</button>
                         </div>
                         <div className="col">
-                            <button className="time-button">3MO</button>
+                            <button className="time-button" onClick={() => handlePeriodChange('3mo')}>3MO</button>
                         </div>
                         <div className="col">
-                            <button className="time-button">YTD</button>
+                            <button className="time-button" onClick={() => handlePeriodChange('ytd')}>YTD</button>
                         </div>
                         <div className="col">
-                            <button className="time-button">1Y</button>
+                            <button className="time-button" onClick={() => handlePeriodChange('1y')}>1Y</button>
                         </div>
                         <div className="col">
-                            <button className="time-button">5Y</button>
+                            <button className="time-button" onClick={() => handlePeriodChange('5y')}>5Y</button>
                         </div>
                         <div className="col">
-                            <button className="time-button">MAX</button>
+                            <button className="time-button" onClick={() => handlePeriodChange('max')}>MAX</button>
                         </div>
                     </div>
 
@@ -122,7 +128,7 @@ const StockDetails = () => {
                                     <span>{dayHigh}</span>
                                 </div>
                             </div>
-                        </ div>
+                        </div>
                         <div className="row">
                             <div className="col-md-3 mb-3">
                                 <div className="metric">
@@ -144,7 +150,6 @@ const StockDetails = () => {
                             </div>
                         </div>
                         <div className="row">
-
                             <div className="col-md-3 mb-3">
                                 <div className="metric">
                                     <p>52W Low</p>
@@ -164,7 +169,6 @@ const StockDetails = () => {
                             </div>
                         </div>
                     </div>
-
 
                     <div className="container">
                         <h2 className="my-4">Additional Metrics</h2>
@@ -222,49 +226,6 @@ const StockDetails = () => {
                                     <p>Face Value</p>
                                     <span>{face_value}</span>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div className="returns-metrics">
-                        <h2>Returns</h2>
-                        <div className="returns">
-                            <div className="return-metric">
-                                <p>YTD</p>
-                                <span>{returns['YTD'] ? returns['YTD'] + '%' : 'N/A'}</span>
-                            </div>
-                            <div className="return-metric">
-                                <p>1W</p>
-                                <span>{returns['1W'] ? returns['1W'] + '%' : 'N/A'}</span>
-                            </div>
-                            <div className="return-metric">
-                                <p>1MO</p>
-                                <span>{returns['1MO'] ? returns['1MO'] + '%' : 'N/A'}</span>
-                            </div>
-                            <div className="return-metric">
-                                <p>3MO</p>
-                                <span>{returns['3MO'] ? returns['3MO'] + '%' : 'N/A'}</span>
-                            </div>
-                            <div className="return-metric">
-                                <p>6MO</p>
-                                <span>{returns['6MO'] ? returns['6MO'] + '%' : 'N/A'}</span>
-                            </div>
-                            <div className="return-metric">
-                                <p>1Y</p>
-                                <span>{returns['1Y'] ? returns['1Y'] + '%' : 'N/A'}</span>
-                            </div>
-                            <div className="return-metric">
-                                <p>2Y</p>
-                                <span>{returns['2Y'] ? returns['2Y'] + '%' : 'N/A'}</span>
-                            </div>
-                            <div className="return-metric">
-                                <p>3Y</p>
-                                <span>{returns['3Y'] ? returns['3Y'] + '%' : 'N/A'}</span>
-                            </div>
-                            <div className="return-metric">
-                                <p>5Y</p>
-                                <span>{returns['5Y'] ? returns['5Y'] + '%' : 'N/A'}</span>
                             </div>
                         </div>
                     </div>

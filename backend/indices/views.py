@@ -13,12 +13,13 @@ from rest_framework.permissions import AllowAny
 class IndicePriceViewSet(viewsets.ModelViewSet):
     queryset = IndicePrice.objects.all()
     serializer_class = IndicePriceSerializer
-    permission_classes = [AllowAny] 
+    permission_classes = [AllowAny]
+
     @action(detail=False, methods=['get'])
     def live_prices(self, request):
         try:
             # List of stock symbols
-            stocks = ["^NSEI", "^BSESN","^NSEBANK","^NSEMDCP50","^IXIC", "^GSPC","^DJI","USSPX","BTC-USD","ETH-USD","BNB-USD","DOGE-USD"]
+            stocks = ["^NSEI", "^BSESN", "^NSEBANK", "^NSEMDCP50", "^IXIC", "^GSPC", "^DJI", "USSPX", "BTC-USD", "ETH-USD", "BNB-USD", "DOGE-USD"]
             data = {}
             for symbol in stocks:
                 stock = yf.Ticker(symbol)
@@ -29,10 +30,10 @@ class IndicePriceViewSet(viewsets.ModelViewSet):
                     data[symbol] = {
                         'symbol': symbol,
                         'name': info.get('shortName'),
-                        'current_price': history['Close'].iloc[-1],
-                        'day_low': history['Low'].min(),
-                        'day_high': history['High'].max(),
-                        'previous_close': history['Close'].iloc[-2] if len(history) > 1 else None
+                        'current_price': round(history['Close'].iloc[-1], 2),
+                        'day_low': round(history['Low'].min(), 2),
+                        'day_high': round(history['High'].max(), 2),
+                        'previous_close': round(history['Close'].iloc[-2], 2) if len(history) > 1 else None
                     }
                     # Update or create stock price record
                     IndicePrice.objects.update_or_create(symbol=symbol, defaults=data[symbol])

@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from .models import Portfolio
 from .serializers import PortfolioSerializer
 import requests
-import decimal
+from decimal import Decimal, InvalidOperation
 
 class PortfolioViewSet(viewsets.ModelViewSet):
     queryset = Portfolio.objects.all()
@@ -14,49 +14,56 @@ class PortfolioViewSet(viewsets.ModelViewSet):
     def list_companies(self, request):
         portfolios = Portfolio.objects.filter(user=request.user)
         result = []
-        total_profit_loss = 0  # Variable to accumulate total profit/loss
+        total_invested = Decimal('0.00')
+        total_current_value = Decimal('0.00')
+        total_profit_loss = Decimal('0.00')
 
         for portfolio in portfolios:
             stock_name = portfolio.stock_name
             try:
-                response = requests.get(f'http://127.0.0.1:8000/api/stockprice/stock-prices/stock-data/?symbol={stock_name}')
-                response.raise_for_status()  # Raise an error for bad responses
+                response = requests.get(f'http://127.0.0.1:8000/api/stockdata/stock-detail-data/?stockname={stock_name}')
+                response.raise_for_status()
                 data = response.json()
-                current_price = data.get('current_price', 0)
-                current_price = float(current_price)  # Ensure current_price is a float
-            except requests.exceptions.RequestException as e:
-                current_price = 0  # Fallback to 0 in case of an error
-                print(f"Error fetching stock data for {stock_name}: {e}")
+                name = data.get('name')
+                price_change=(data.get('priceChange')/data.get('current_price', '0'))*100
+                current_price = Decimal(data.get('current_price', '0'))  # Ensure current_price is a Decimal
+            except (requests.exceptions.RequestException, InvalidOperation):
+                current_price = Decimal('0')  # Fallback to 0 in case of an error
+                print(f"Error fetching stock data for {stock_name}")
 
-            price_bought = portfolio.price_bought
-            if isinstance(price_bought, decimal.Decimal):
-                price_bought = float(price_bought)  # Convert Decimal to float if necessary
-
-            quantity = portfolio.quantity
-            change_percent = ((current_price - price_bought) / price_bought) * 100 if price_bought else 0
+            price_bought = Decimal(portfolio.price_bought)
+            quantity = Decimal(portfolio.quantity)
+            invested = price_bought * quantity
+            current_value = current_price * quantity
             profit_loss = (current_price - price_bought) * quantity
-            total_profit_loss += profit_loss  # Accumulate total profit/loss
+            total_invested += invested
+            total_current_value += current_value
+            total_profit_loss += profit_loss
 
             result.append({
+                'name': name,
+                'percent_change': price_change,
                 'stock_name': stock_name,
-                'price_bought': price_bought,
-                'quantity': quantity,
-                'current_price': current_price,
-                'change_percent': change_percent,
-                'profit_loss': profit_loss,
+                'price_bought': str(price_bought),  # Convert to string for JSON serialization
+                'quantity': str(quantity),
+                'current_price': str(current_price),
+                'invested': str(invested),
+                'current_value': str(current_value),
+                'profit_loss': str(profit_loss),
+                'profit_loss_percent': profit_loss/invested
             })
 
         # Sort the result by profit/loss in descending order
-        result = sorted(result, key=lambda x: x['profit_loss'], reverse=True)
+        result = sorted(result, key=lambda x: Decimal(x['profit_loss']), reverse=True)
 
-        # Include the total profit/loss in the response
         response_data = {
-            'total_profit_loss': total_profit_loss,
+            'total_invested': str(total_invested),
+            'total_current_value': str(total_current_value),
+            'total_profit_loss': str(total_profit_loss),
             'companies': result
         }
 
         return Response(response_data, status=status.HTTP_200_OK)
-
 
     @action(detail=False, methods=['post'], url_path='add-stock')
     def add_stock(self, request):
@@ -67,56 +74,49 @@ class PortfolioViewSet(viewsets.ModelViewSet):
             return Response({"error": "Missing required fields"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            quantity = int(quantity)
-        except ValueError:
+            quantity = Decimal(quantity)
+        except (InvalidOperation, ValueError):
             return Response({"error": "Invalid quantity"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Fetch the current price from the stock price API
         try:
-            response = requests.get(f'http://127.0.0.1:8000/api/stockprice/stock-prices/stock-data/?symbol={stock_name}')
-            response.raise_for_status()  # Raise an error for bad responses
+            response = requests.get(f'http://127.0.0.1:8000/api/stockdata/stock-detail-data/?stockname={stock_name}')
+            response.raise_for_status()
             data = response.json()
-            current_price = data.get('current_price', 0)
-        except requests.exceptions.RequestException as e:
-            return Response({"error": f"Error fetching stock price: {e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            current_price = Decimal(data.get('current_price', '0'))
+        except (requests.exceptions.RequestException, InvalidOperation):
+            return Response({"error": "Error fetching stock price"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        # Try to get the existing portfolio item
         try:
             portfolio = Portfolio.objects.get(user=request.user, stock_name=stock_name)
-            
-            # Calculate the new average price
             total_quantity = portfolio.quantity + quantity
             total_cost = (portfolio.quantity * portfolio.price_bought) + (quantity * current_price)
             new_average_price = total_cost / total_quantity
-            
-            # Update the portfolio item
+
             portfolio.price_bought = new_average_price
             portfolio.quantity = total_quantity
             portfolio.save()
-            
-            return Response({"message": "Stock updated successfully", "new_average_price": new_average_price}, status=status.HTTP_200_OK)
+
+            return Response({"message": "Stock updated successfully", "new_average_price": str(new_average_price)}, status=status.HTTP_200_OK)
         except Portfolio.DoesNotExist:
-            # If the stock does not exist, create a new portfolio item
             Portfolio.objects.create(
                 user=request.user,
                 stock_name=stock_name,
                 price_bought=current_price,
                 quantity=quantity
             )
-            
             return Response({"message": "Stock added successfully"}, status=status.HTTP_201_CREATED)
 
     @action(detail=False, methods=['post'], url_path='sell-stock')
     def sell_stock(self, request):
         stock_name = request.data.get('stock_name')
-        quantity_to_sell = request.data.get('quantity_to_sell', 0)
+        quantity_to_sell = request.data.get('quantity', '0')
 
         if not stock_name or not quantity_to_sell:
             return Response({"error": "Missing required fields"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            quantity_to_sell = int(quantity_to_sell)
-        except ValueError:
+            quantity_to_sell = Decimal(quantity_to_sell)
+        except (InvalidOperation, ValueError):
             return Response({"error": "Invalid quantity to sell"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
