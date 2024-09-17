@@ -40,7 +40,7 @@ const MainNews = () => {
     }
 
     return (
-        <div className="stock-news-section">
+        <div className="stocks-news-section">
             <div className="stock-news-header">
                 <h2>Stocks in News</h2>
                 <button className="news-button" onClick={handleSeeMore}>News</button>

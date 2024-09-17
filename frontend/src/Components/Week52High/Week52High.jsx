@@ -21,7 +21,7 @@ const Week52High = () => {
                     throw new Error("Failed to fetch stock data");
                 }
                 const data = await response.json();
-                setStocks(data); // Assume the data comes as an array of stock objects
+                setStocks(data);
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
@@ -47,19 +47,19 @@ const Week52High = () => {
     return (
         <div className="week-52-high-container">
             <div className="header-container">
-                <h2>52 Week High</h2>
+                <h2 style={{'color':'#592a50'}}>52 Week High</h2>
                 <button className="see-more-button" onClick={handleSeeMore}>
                     See More
                 </button>
             </div>
 
             <div className="stock-cards">
-                {stocks.slice(0, 4).map((stock) => ( // Slice to show only the top 4 stocks
+                {stocks.slice(0, 4).map((stock) => ( 
                     <a href={`/stock/${stock.symbol}`} key={stock.symbol}>
-                        <div className="stock-card">
+                        <div className="stocks-card">
                             <h3>{stock.name}</h3>
                             <p>Current Price: {stock.current_price}</p>
-                            <p className={getStockChangeClass(stock.change)}>
+                            <p className={getStockChangeClass(stock.percent_change)}>
                                 Percent Change: {stock.percent_change}%
                             </p>
                             <p>Volume: {stock.volume}</p>

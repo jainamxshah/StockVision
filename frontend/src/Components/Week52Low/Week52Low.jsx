@@ -47,7 +47,7 @@ const Week52Low = () => {
     return (
         <div className="week-52-low-container">
             <div className="header-container">
-                <h2>52 Week Low</h2>
+                <h2 style={{'color':'#592a50'}}>52 Week Low</h2>
                 <button className="see-more-button" onClick={handleSeeMore}>
                     See More
                 </button>
@@ -56,10 +56,10 @@ const Week52Low = () => {
             <div className="stock-cards">
                 {stocks.slice(0, 4).map((stock) => ( // Slice to show only the top 4 stocks
                     <a href={`/stock/${stock.symbol}`} key={stock.symbol}>
-                        <div className="stock-card">
+                        <div className="stocks-card">
                             <h3>{stock.name}</h3>
                             <p>Current Price: {stock.current_price}</p>
-                            <p className={getStockChangeClass(stock.change)}>
+                            <p className={getStockChangeClass(stock.percent_change)}>
                                 Percent Change: {stock.percent_change}%
                             </p>
                             <p>Volume: {stock.volume}</p>

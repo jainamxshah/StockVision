@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import AuthProvider from "./context/AuthContext";
 // import LandingPage from "./Pages/LandingPage/LandingPage";
 import Login from "./Components/auth/Login";
-import Navbar from "./Components/Navbar/Navbar";
+import Navbar from "./Components/Header/Header";
 import Explore from "./Pages/Explore/Explore";
 import SignUp from "./Components/auth/Signup";
 import StockPage from "./Pages/StocksPage/StockPage";

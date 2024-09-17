@@ -56,10 +56,10 @@ const TopLosers = () => {
             <div className="stock-cards">
                 {stocks.slice(0, 4).map((stock) => ( // Slice to show only the top 4 stocks
                     <a href={`/stock/${stock.symbol}`} key={stock.symbol}>
-                        <div className="stock-card">
+                        <div className="stocks-card">
                             <h3>{stock.name}</h3>
                             <p>Current Price: {stock.current_price}</p>
-                            <p className={getStockChangeClass(stock.change)}>
+                            <p className={getStockChangeClass(stock.percent_change)}>
                                 Percent Change: {stock.percent_change}%
                             </p>
                             <p>Volume: {stock.volume}</p>

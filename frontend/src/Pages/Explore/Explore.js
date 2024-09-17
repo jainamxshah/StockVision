@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import './Explore.css'
 
-import Navbar from '../../Components/Navbar/Navbar'
-
 import Indices from '../../Components/Indices/Indices'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navigation from '../../Components/Navigations';
@@ -30,20 +28,20 @@ const Explore = () => {
 
 
   return (
-    <div>
+   <>
       <IndicePrices/> 
       {/* <Card/> */}
       <TopGainers/>
       <TopLosers />
       <ActiveByVolume />
+      <MainNews/>
       <Week52High />
       <Week52Low />
-      <MainNews/>
       <Footer/>
       {/* {/* <Watchlist/> */}
     {/* <Portfolio/> */}
     {/* <StockDetails/> */}
-    </div>
+    </>
   )
 }
 

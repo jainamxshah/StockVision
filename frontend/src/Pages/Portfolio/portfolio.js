@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Portfolio.css';
+import './portfolio.css';
 import { Container, Row, Col, Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 
