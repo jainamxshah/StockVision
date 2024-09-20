@@ -16,6 +16,7 @@
 .watchlist-header {
   display: flex;
   justify-content: space-between;
+  background-color: var(--text-color);
   /* align-items: center; */
   margin-bottom: 50px;
 }
