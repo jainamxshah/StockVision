@@ -5,7 +5,8 @@ import { FaEdit, FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom'; // Import Link
 import './watchlist.css'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 // Styled components
 const UserWatchlistButton = styled(Button)`
   background-color: #dcd0ff;
@@ -52,8 +53,27 @@ const AddStockButton = styled(Button)`
 const stockSuggestions = [
     { symbol: "RELIANCE.NS", name: "Reliance Industries Limited" },
     { symbol: "TCS.NS", name: "Tata Consultancy Services" },
-    // Add other suggestions here
+    { symbol: "HDFCBANK.NS", name: "HDFC Bank Limited" },
+    { symbol: "INFY.NS", name: "Infosys Limited" },
+    { symbol: "ICICIBANK.NS", name: "ICICI Bank Limited" },
+    { symbol: "KOTAKBANK.NS", name: "Kotak Mahindra Bank" },
+    { symbol: "SBIN.NS", name: "State Bank of India" },
+    { symbol: "LT.NS", name: "Larsen & Toubro Limited" },
+    { symbol: "ITC.NS", name: "ITC Limited" },
+    { symbol: "AXISBANK.NS", name: "Axis Bank Limited" },
+    { symbol: "M&M.NS", name: "Mahindra & Mahindra Limited" },
+    { symbol: "HINDUNILVR.NS", name: "Hindustan Unilever Limited" },
+    { symbol: "BAJFINANCE.NS", name: "Bajaj Finance Limited" },
+    { symbol: "SUNPHARMA.NS", name: "Sun Pharmaceutical Industries" },
+    { symbol: "ONGC.NS", name: "Oil and Natural Gas Corporation" },
+    { symbol: "TATAMOTORS.NS", name: "Tata Motors Limited" },
+    { symbol: "ADANIGREEN.NS", name: "Adani Green Energy" },
+    { symbol: "TATASTEEL.NS", name: "Tata Steel Limited" },
+    { symbol: "BHARTIARTL.NS", name: "Bharti Airtel Limited" },
+    { symbol: "DIVISLAB.NS", name: "Divi's Laboratories" },
+    { symbol: "HDFCLIFE.NS", name: "HDFC Life Insurance" }
 ];
+
 
 const Watchlist = () => {
     const [stocks, setStocks] = useState([]);
@@ -163,6 +183,9 @@ const Watchlist = () => {
                 const errorData = await response.json();
                 throw new Error(errorData.message || 'Failed to add stock');
             }
+
+            window.location.reload()
+
             // Fetch updated stocks after adding
             const updatedStocks = await response.json();
             setStocks(updatedStocks);
@@ -223,7 +246,12 @@ const Watchlist = () => {
     const sortedStocks = [...stocks].sort((a, b) => parseFloat(b.changePercent) - parseFloat(a.changePercent));
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="loader-container">
+                <FontAwesomeIcon icon={faSpinner} className="loader" spin />
+                <p className="loading-text">Loading...</p>
+            </div>
+        );
     }
 
     return (
@@ -250,10 +278,10 @@ const Watchlist = () => {
                     </div>
                     <div className="stock-list-container">
                         {sortedStocks.map(stock => (
-                            <a href={`/stock/${stock.stock_name}`} key={stock.stock_name} className="stock-box" style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <div className="stock-box" style={{ textDecoration: 'none', color: 'inherit' }}>
                             <div className="stock-row" key={stock.stock_name}>
                                 <div className="stock-column">
-                                    <div className="stock-column" style={{fontWeight: '600' }}> {stock.name}</div>
+                                        <div className="stock-column" style={{ fontWeight: '600' }}><a href={`/stock/${stock.stock_name}`} key={stock.stock_name}>{stock.name}</a> </div>
                                 </div>
                                 <div className="stock-column">
                                     <div className={parseFloat(stock.priceChange) > 0 ? 'stock-price-change-up' : 'stock-price-change-down'}>
@@ -278,7 +306,7 @@ const Watchlist = () => {
                                     </Button>
                                 </div>
                             </div>
-                            </a>
+                            </div>
                         ))}
                     </div>
                 </Col>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./TopGainers.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const TopGainers = () => {
     const navigate = useNavigate();
@@ -22,9 +24,9 @@ const TopGainers = () => {
                 }
                 const data = await response.json();
                 setStocks(data); // Assume the data comes as an array of stock objects
-                setLoading(false);
             } catch (err) {
                 setError(err.message);
+            } finally {
                 setLoading(false);
             }
         };
@@ -37,11 +39,16 @@ const TopGainers = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="loader-container">
+                <FontAwesomeIcon icon={faSpinner} className="loader" spin />
+                <p className="loading-text">Loading...</p>
+            </div>
+        );
     }
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return <div className="error-message">Error: {error}</div>;
     }
 
     return (

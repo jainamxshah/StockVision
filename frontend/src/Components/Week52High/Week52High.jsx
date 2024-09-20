@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Week52High.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const Week52High = () => {
     const navigate = useNavigate();
@@ -37,7 +39,12 @@ const Week52High = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="loader-container">
+                <FontAwesomeIcon icon={faSpinner} className="loader" spin />
+                <p className="loading-text">Loading...</p>
+            </div>
+        );
     }
 
     if (error) {

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useParams, useNavigate } from 'react-router-dom'; // Use useNavigate for programmatic navigation
 import "./StockPage.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 
 const stocksPerPage = 9; // Number of stocks to display per page
@@ -163,7 +165,12 @@ const StockPage = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="loader-container">
+                <FontAwesomeIcon icon={faSpinner} className="loader" spin />
+                <p className="loading-text">Loading...</p>
+            </div>
+        );
     }
 
     if (error) {

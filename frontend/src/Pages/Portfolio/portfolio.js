@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './portfolio.css';
 import { Container, Row, Col, Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const StockMarket = () => {
     const [selectedOption, setSelectedOption] = useState('BUY');
@@ -130,7 +132,14 @@ const StockMarket = () => {
         }
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) {
+        return (
+            <div className="loader-container">
+                <FontAwesomeIcon icon={faSpinner} className="loader" spin />
+                <p className="loading-text">Loading...</p>
+            </div>
+        );
+    }
     if (error) return <div>Error: {error}</div>;
 
     return (
@@ -160,10 +169,10 @@ const StockMarket = () => {
                     </div>
                     <div className="stock-list-container">
                         {stocks.map(stock => (
-                            <a href={`/stock/${stock.stock_name}`} key={stock.stock_name} className="stock-box" style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <div className="stock-box" style={{ textDecoration: 'none', color: 'inherit' }}>
                                 <div className="stock-row">
                                     <div className="stock-column">
-                                        <div>{stock.name}</div>
+                                        <div><a href={`/stock/${stock.stock_name}`} key={stock.stock_name}>{stock.name}</a></div>
                                         <div className="small-text">{stock.quantity} shares</div>
                                         <div className="small-text">Avg Price: {parseFloat(stock.price_bought).toFixed(2)}</div>
                                     </div>
@@ -189,7 +198,7 @@ const StockMarket = () => {
                                         <Button variant="danger" onClick={() => handleShowSellModal(stock)} className=" mb-md-0 ">SELL</Button>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         ))}
                     </div>
                 </Col>
