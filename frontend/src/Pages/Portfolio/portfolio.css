@@ -1,387 +1,381 @@
-
 .stock-list-container {
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        padding: 20px;
-        background-color: #f9f9f9;
-    }
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+}
 
 .add-money-card {
-        background-color: #dcd0ff;
-        /* Light purple color */
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        padding: 20px;
-        height: 70%;
-        position: relative;
-        font-size: 40px;
-        font-weight: bold;
-    }
+  background-color: #dcd0ff;
+  /* Light purple color */
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  height: 70%;
+  position: relative;
+  font-size: 40px;
+  font-weight: bold;
+}
 
-    .header-row {
-        display: flex;
-        justify-content: space-between;
-        background-color: #dcd0ff; /* Light purple color */
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-    .header-part {
-        flex: 1;
-        padding: 10px;
-    }
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  background-color: #dcd0ff; /* Light purple color */
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.header-part {
+  flex: 1;
+  padding: 10px;
+  
+}
 
-    .header-part-title {
-        font-size: 24px;
-        font-weight: bold;
-    }
+.header-part-title {
+  font-size: 24px;
+  font-weight: bold;
+}
 
-    .header-part-subtitle {
-        font-size: 14px;
-        margin-top: 5px;
-    }
+.header-part-subtitle {
+  font-size: 14px;
+  margin-top: 5px;
+}
 
-    .details-part {
-        font-size: 14px;
-        margin-top: 10px;
-    }
+.details-part {
+  font-size: 14px;
+  margin-top: 10px;
+}
 
-    .footer-part {
-        position: relative;
-        top: 70px;
-        right: 40px;
-        color: #6a0dad;
-        /* Purple color */
-    }
+.footer-part {
+  position: relative;
+  top: 70px;
+  right: 40px;
+  color: #6a0dad;
+  /* Purple color */
+}
 
-    .stock-box {
-        margin-bottom: 10px;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        padding: 10px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: background-color 0.3s, box-shadow 0.2s;
-    }
+.stock-box {
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, box-shadow 0.2s;
+}
 
-    .stock-box:hover {
-        background-color: #f1f1f1;
-        transform: translateY(-5px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
+.stock-box:hover {
+  background-color: #f1f1f1;
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
 
-    .stock-header {
-        display: flex;
-        font-weight: bold;
-        margin-bottom: 10px;
-        background-color: #d3d3d3;
-        /* Light purple color */
-        border-radius: 10px;
-        padding: 10px;
-    }
+.stock-header {
+  display: flex;
+  font-weight: bold;
+  margin-bottom: 10px;
+  background-color:  hsl(283, 48%, 38%);
+  /* Light purple color */
+  border-radius: 10px;
+  padding: 10px;
+}
 
-    .stock-header div {
-        flex: 1;
-        text-align: center;
-    }
+.stock-header div {
+  flex: 1;
+  text-align: center;
+}
 
-    .stock-row {
-        display: flex;
-        margin-bottom: 5px;
-    }
+.stock-row {
+  display: flex;
+  margin-bottom: 5px;
+}
 
-    .stock-column {
-        flex: 1;
-        text-align: center;
-        padding: 20px;
-    }
+.stock-column {
+  flex: 1;
+  text-align: center;
+  padding: 20px;
+}
 
-    .small-text {
-        font-size: 12px;
-        /* Smaller text size for secondary information */
-        color: #666;
-        /* Default color */
-    }
+.small-text {
+  font-size: 12px;
+  /* Smaller text size for secondary information */
+  color: #666;
+  /* Default color */
+}
 
-    .stock-price-change-up {
-        color: green;
-        font-size: 14px;
-    }
+.stock-price-change-up {
+  color: green;
+  font-size: 14px;
+}
 
-    .stock-price-change-down {
-        color: red;
-        font-size: 14px;
-    }
+.stock-price-change-down {
+  color: red;
+  font-size: 14px;
+}
 
-    .column-header {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+.column-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .dropdown-icon {
-        margin-left: 5px;
-    }
+.dropdown-icon {
+  margin-left: 5px;
+}
 
-    @media (max-width: 868px) {
-        /* Hide the second column in the header */
-        .header-part:nth-child(2) {
-            display: none;
-        }
-        .header-part:nth-child(3) {
-            position: absolute;
-        }
+@media (max-width: 868px) {
+  /* Hide the second column in the header */
+  .header-part:nth-child(2) {
+    display: none;
+  }
+  .header-part:nth-child(3) {
+    position: absolute;
+  }
 
-        .stock-row {
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-        }
-        
-        .column-header {
-            display: none; /* Hide all columns by default */
-        }
-        
-        /* Adjust stock container to show only three columns */
-        .column-header:first-child, /* Show only the first column */
+  .stock-row {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .column-header {
+    display: none; /* Hide all columns by default */
+  }
+
+  /* Adjust stock container to show only three columns */
+  .column-header:first-child, /* Show only the first column */
         .column-header:nth-child(2), 
         .column-header:nth-child(3) {
-            display: block;
-        }
-        
-       
-    
-        /* Move the money card above the stock container on mobile screens */
-        .stock-list-container {
-            margin-bottom: 20px;
-        }
+    display: block;
+  }
 
-    
-        /* Ensure the stock boxes adjust to the smaller screen */
-        .stock-box {
-            flex-direction: column;
-        }
+  /* Move the money card above the stock container on mobile screens */
+  .stock-list-container {
+    margin-bottom: 20px;
+  }
 
-        .add-money-card{
-            margin: 90px;   
-            height: 100%;
-            width:70%;
-        }
-        
-    }
+  /* Ensure the stock boxes adjust to the smaller screen */
+  .stock-box {
+    flex-direction: column;
+  }
 
-    .payment-container {
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        padding: 10px;
-        height: 70%;
-        position: absolute;
-        background-color: #ffffff; /* White background */
-    }
-    
-    .payment-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px 0; /* Adjusted padding to remove extra space */
-        border-bottom: 1px solid #ddd;
-    }
-    
-    .payment-row:last-child {
-        border-bottom: none; /* Remove bottom border from the last row */
-    }
-    
-    .stock-name {
-        font-weight: bold;
-        font-size: 16px;
-        color: #000000; /* Black color */
-    }
-    
-    .stock-details {
-        font-size: 14px;
-        color: #888888; /* Gray color */
-    }
-    
-    .close-icon {
-        color: #000000; /* Black color */
-        cursor: pointer;
-    }
-    
-    .payment-options {
-        justify-content: center;
-        border-bottom: 1px solid #ddd;
-    }
-    
-    .payment-option {
-        font-size: 16px;
-        cursor: pointer;
-        padding: 5px 10px;
-        color: #888888; /* Gray color when not selected */
-    }
-    
-    .payment-option.selected {
-        color: green;
-        border-bottom: 4px solid green; /* Bold green underline when selected */
-    }
-    
-    .payment-option:not(.selected) {
-        color: #888888; /* Gray color when not selected */
-    }
-    
-    /* Adjust container padding to remove extra space from the top */
-    .stock-market-container {
-        padding: 20px;
+  .add-money-card {
+    margin: 90px;
+    height: 100%;
+    width: 70%;
+  }
+}
 
-    }
+.payment-container {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  height: 70%;
+  position: absolute;
+  background-color: #ffffff; /* White background */
+}
+
+.payment-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0; /* Adjusted padding to remove extra space */
+  border-bottom: 1px solid #ddd;
+}
+
+.payment-row:last-child {
+  border-bottom: none; /* Remove bottom border from the last row */
+}
+
+.stock-name {
+  font-weight: bold;
+  font-size: 16px;
+  color: #000000; /* Black color */
+}
+
+.stock-details {
+  font-size: 14px;
+  color: #888888; /* Gray color */
+}
+
+.close-icon {
+  color: #000000; /* Black color */
+  cursor: pointer;
+}
+
+.payment-options {
+  justify-content: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.payment-option {
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #888888; /* Gray color when not selected */
+}
+
+.payment-option.selected {
+  color: green;
+  border-bottom: 4px solid green; /* Bold green underline when selected */
+}
+
+.payment-option:not(.selected) {
+  color: #888888; /* Gray color when not selected */
+}
+
+/* Adjust container padding to remove extra space from the top */
+.stock-market-container {
+  padding: 20px;
+}
 /* 3rd Row Styling */
 .row-container {
-    flex: 1; /* Take the remaining space */
-    margin-bottom: 20px;
+  flex: 1; /* Take the remaining space */
+  margin-bottom: 20px;
 }
 /* Styles for each small container */
 .row-third {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .small-container {
-    width: 30%;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    font-weight: bold;
-    font-size: 14px;
-    margin-right: 10px; /* Space between small containers */
+  width: 30%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  font-weight: bold;
+  font-size: 14px;
+  margin-right: 10px; /* Space between small containers */
 }
 
 .divider {
-    border-top: 1px solid black;
-    margin: 20px 0; /* Margin for spacing above and below the divider */
+  border-top: 1px solid black;
+  margin: 20px 0; /* Margin for spacing above and below the divider */
 }
 /* Styles for the stock information row */
 .row-first {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .remove-icon {
-    color: black;
+  color: black;
 }
 
 /* Styles for BUY/SELL options */
 .buy-sell-options {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
-.buy-option, .sell-option {
-    width: 50%;
-    text-align: center;
-    padding: 10px;
-    cursor: pointer;
+.buy-option,
+.sell-option {
+  width: 50%;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .active {
-    color: green;
-    border-bottom: 4px solid green;
-    font-weight: bold;
+  color: green;
+  border-bottom: 4px solid green;
+  font-weight: bold;
 }
 
 /* Input fields */
 .input-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .input-label {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
 }
 .bold-text {
-    font-weight: bold;
-    margin-left: 5px;
+  font-weight: bold;
+  margin-left: 5px;
 }
 
 .input-field {
-    width: 40%;
-    height: 30px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding-left: 10px;
+  width: 40%;
+  height: 30px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding-left: 10px;
 }
 .grey-input {
-    background-color: #e0e0e0;
-    font-size: 16px;
-    color: #666;
+  background-color: #e0e0e0;
+  font-size: 16px;
+  color: #666;
 }
 
 /* Balance and Approx Required Row */
 /* Container for the balance row and buy button */
 .balance-container {
-    position: absolute;
-    bottom: 20px; /* Space from the bottom of the container */
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
+  position: absolute;
+  bottom: 20px; /* Space from the bottom of the container */
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
 }
 .row-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Space between balance row and button */
-    flex: 1; /* Take up remaining space in the payment container */
-    padding: 10px;
-    box-sizing: border-box; /* Include padding in height calculation */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Space between balance row and button */
+  flex: 1; /* Take up remaining space in the payment container */
+  padding: 10px;
+  box-sizing: border-box; /* Include padding in height calculation */
 }
 
 /* Balance row styling */
 .balance-row {
-    display: flex;
-    position: relative;
-    justify-content: space-between; /* Space between balance text and approx text */
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  position: relative;
+  justify-content: space-between; /* Space between balance text and approx text */
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 /* Balance text styling */
 .balance-text {
-    font-size: 14px;
-    color: #666; /* Gray color */
+  font-size: 14px;
+  color: #666; /* Gray color */
 }
 
 /* Approx required text styling */
 .approx-text {
-    font-size: 14px;
-    color: #666; /* Gray color */
-    
+  font-size: 14px;
+  color: #666; /* Gray color */
 }
 
 /* Buy button styling */
 .buy-button {
-    width: 100%;
-    padding: 10px;
-    background-color: green;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 0; /* Remove extra margin if any */
+  width: 100%;
+  padding: 10px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 0; /* Remove extra margin if any */
 }

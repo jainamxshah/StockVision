@@ -92,6 +92,7 @@ const StockPage = () => {
     const handleAddToPortfolioClick = ({ name, symbol }) => {
         setPortfolioData({ stockName: name, stockSymbol: symbol, numberOfShares: 0 });
         setShowPortfolioModal(true);
+        
     };
 
     const handlePortfolioFormSubmit = async (e) => {
