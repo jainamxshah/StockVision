@@ -17,9 +17,7 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setExpanded(!expanded)} />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto d-flex align-items-center">
-            <Form inline className="search-form">
-              <FormControl type="search" placeholder="Search Stocks" className="search-input" />
-            </Form>
+            
             <Nav.Link as={Link} to="/explore" className="nav-link">Explore</Nav.Link>
             {isAuth && (
               <>

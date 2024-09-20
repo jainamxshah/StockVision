@@ -50,7 +50,7 @@ const News = () => {
 
     return (
         <div className="stock-news-section">
-            <div className="stock-news-header">
+            <div className="stock_news_header">
                 <h2>Stocks in News</h2>
             </div>
             <div className="news-cards">

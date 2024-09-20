@@ -15,7 +15,6 @@ import Watchlist from "./Pages/WatchList/watchlist"
 import Portfolio from "./Pages/Portfolio/portfolio";
 
 
-
 function App() {
   return (
     <>

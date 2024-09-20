@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useParams, useNavigate } from 'react-router-dom'; // Use useNavigate for programmatic navigation
 import "./StockPage.css";
 
+
 const stocksPerPage = 9; // Number of stocks to display per page
 
 const StockPage = () => {

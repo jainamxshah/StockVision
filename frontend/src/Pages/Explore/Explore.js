@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './Explore.css'
+import Banner from '../../Components/Banner/Banner'
 
 import Indices from '../../Components/Indices/Indices'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
@@ -29,6 +30,7 @@ const Explore = () => {
 
   return (
    <>
+      <Banner/>
       <IndicePrices/> 
       {/* <Card/> */}
       <TopGainers/>

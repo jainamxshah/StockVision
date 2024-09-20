@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { FaEdit, FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom'; // Import Link
+import './watchlist.css'
 
 // Styled components
 const UserWatchlistButton = styled(Button)`
@@ -11,15 +12,18 @@ const UserWatchlistButton = styled(Button)`
   color: #4a3f7f;
   border: none;
   border-radius: 25px;
-  padding: 10px 20px;
+  padding: 15px 20px;
   display: flex;
   align-items: center;
+  margin-bottom : -15px;
   gap: 10px;
-  font-size: 16px;
+  font-family : var(--content-font-family)
+  font-size: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   
   &:hover {
     background-color: #c3baff;
+    color: #fff;
   }
 `;
 
@@ -28,60 +32,20 @@ const AddStockButton = styled(Button)`
   color: #4a3f7f;
   border: none;
   border-radius: 25px;
-  padding: 10px;
+  padding: 11px;
   display: flex;
-  margin-left: auto;
+  margin-top: -45px;
+  margin-left: 900px;
+  margin-bottom:20px;
   align-items: center;
-  font-size: 20px;
+  font-size: 18px;
+  font-family : var(--content-font-family)
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
+
   &:hover {
     background-color: #c3baff;
+    color: #fff
   }
-`;
-
-const WatchlistContainer = styled.div`
-  margin-top: 20px;
-`;
-
-const StockCard = styled.div`
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  text-decoration: none; // Remove underline from link
-  color: inherit; // Inherit text color
-`;
-
-const StockHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-`;
-
-const StockDetails = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
-
-const StockDetailRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-`;
-
-const StockDetailHeading = styled.div`
-  font-weight: bold;
-`;
-
-const StockDetailValue = styled.div`
-  color: ${props => props.isPositive ? 'green' : 'red'};
 `;
 
 // Stock suggestions with full names
@@ -133,13 +97,18 @@ const Watchlist = () => {
                         'Content-Type': 'application/json',
                     },
                 });
-
+        
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-
+        
                 const data = await response.json();
-
+        
+                // Ensure 'data' is an array
+                if (!Array.isArray(data)) {
+                    throw new Error('Expected an array of stocks');
+                }
+        
                 const detailedStocks = await Promise.all(
                     data.map(async (stock) => {
                         const detailResponse = await fetch(
@@ -151,7 +120,7 @@ const Watchlist = () => {
                                 },
                             }
                         );
-
+        
                         const details = await detailResponse.json();
                         return {
                             ...stock,
@@ -165,7 +134,7 @@ const Watchlist = () => {
                         };
                     })
                 );
-
+        
                 setStocks(detailedStocks);
             } catch (error) {
                 setError(error.message);
@@ -174,7 +143,7 @@ const Watchlist = () => {
                 setLoading(false);
             }
         };
-
+        
         fetchUsername();
         fetchWatchlistData();
     }, [token]);
@@ -221,6 +190,7 @@ const Watchlist = () => {
                 throw new Error(errorData.message || 'Failed to delete stock');
             }
 
+
             // Update stocks after deletion
             setStocks(stocks.filter((stock) => stock.stock_name !== stockName));
         } catch (error) {
@@ -258,56 +228,63 @@ const Watchlist = () => {
 
     return (
         <Container className="watchlist-container">
-            <div className="watchlist-header">
+            <div className="watchlist-hexader">
                 <UserWatchlistButton>
-                    <FaEdit className="icon" /> {username}'s Watchlist
+                    {username}'s Watchlist
                 </UserWatchlistButton>
                 <AddStockButton onClick={() => setShowAddModal(true)}>
                     Add to watchlist<FaPlus className="mx-2 icon" />
                 </AddStockButton>
             </div>
 
-            <WatchlistContainer>
-                {sortedStocks.map((stock) => (
-                    <Link to={`/stock/${stock.stock_name}`} key={stock.stock_name} style={{ textDecoration: 'none' }}>
-                        <StockCard>
-                            <StockHeader>
-                                <h5>{stock.name}</h5>
-                                <Button variant="danger" onClick={() => handleDeleteStock(stock.stock_name)}>
-                                    Remove
-                                </Button>
-                            </StockHeader>
-                            <StockDetails>
-                                <StockDetailRow>
-                                    <StockDetailHeading>Market Price:</StockDetailHeading>
-                                    <StockDetailValue>{stock.mktPrice}</StockDetailValue>
-                                </StockDetailRow>
-                                <StockDetailRow>
-                                    <StockDetailHeading>Price Change:</StockDetailHeading>
-                                    <StockDetailValue isPositive={stock.priceChange >= 0}>{stock.priceChange}</StockDetailValue>
-                                </StockDetailRow>
-                                <StockDetailRow>
-                                    <StockDetailHeading>Change Percent:</StockDetailHeading>
-                                    <StockDetailValue isPositive={stock.changePercent >= 0}>{stock.changePercent}%</StockDetailValue>
-                                </StockDetailRow>
-                                <StockDetailRow>
-                                    <StockDetailHeading>Volume:</StockDetailHeading>
-                                    <StockDetailValue>{stock.volume}</StockDetailValue>
-                                </StockDetailRow>
-                                <StockDetailRow>
-                                    <StockDetailHeading>Day High:</StockDetailHeading>
-                                    <StockDetailValue>{stock.dayHigh}</StockDetailValue>
-                                </StockDetailRow>
-                                <StockDetailRow>
-                                    <StockDetailHeading>Day Low:</StockDetailHeading>
-                                    <StockDetailValue>{stock.dayLow}</StockDetailValue>
-                                </StockDetailRow>
-                            </StockDetails>
-                        </StockCard>
-                    </Link>
-                ))}
-            </WatchlistContainer>
+            <Row>
+                <Col xs={12} md={12} lg={12} className="mb-3">
+                    <div className="stock-header d-none d-md-flex" style={{color : 'white'}}>
+                        <div className="column-header">COMPANY NAME</div>
+                        <div className="column-header">% CHANGE</div>
+                        <div className="column-header">MKT PRICE</div>
+                        <div className="column-header">VOLUME</div>
+                        <div className="column-header">DAY HIGH</div>
+                        <div className="column-header">DAY LOW</div>
+                        <div className="column-header">ACTION</div>
+                    </div>
+                    <div className="stock-list-container">
+                        {sortedStocks.map(stock => (
+                            <a href={`/stock/${stock.stock_name}`} key={stock.stock_name} className="stock-box" style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <div className="stock-row" key={stock.stock_name}>
+                                <div className="stock-column">
+                                    <div className="stock-column" style={{fontWeight: '600' }}> {stock.name}</div>
+                                </div>
+                                <div className="stock-column">
+                                    <div className={parseFloat(stock.priceChange) > 0 ? 'stock-price-change-up' : 'stock-price-change-down'}>
+                                        {parseFloat(stock.changePercent).toFixed(2)} %
+                                    </div>
+                                </div>
+                                <div className="stock-column">
+                                    <div>{parseFloat(stock.mktPrice).toFixed(2)}</div>
+                                </div>
+                                <div className="stock-column">
+                                    <div>{parseFloat(stock.volume).toFixed(2)}</div>
+                                </div>
+                                <div className="stock-column">
+                                    <div>{parseFloat(stock.dayHigh).toFixed(2)}</div>
+                                </div>
+                                <div className="stock-column">
+                                    <div>{parseFloat(stock.dayLow).toFixed(2)}</div>
+                                </div>
+                                <div className="stock-column">
+                                    <Button variant="danger" onClick={() => handleDeleteStock(stock.stock_name)}>
+                                        Remove
+                                    </Button>
+                                </div>
+                            </div>
+                            </a>
+                        ))}
+                    </div>
+                </Col>
+            </Row>
 
+            {/* Add Stock Modal */}
             <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Stock</Modal.Title>
@@ -325,10 +302,7 @@ const Watchlist = () => {
                             {filteredSuggestions.length > 0 && (
                                 <ul className="suggestions-list">
                                     {filteredSuggestions.map((suggestion) => (
-                                        <li
-                                            key={suggestion.symbol}
-                                            onClick={() => handleSuggestionClick(suggestion)}
-                                        >
+                                        <li key={suggestion.symbol} onClick={() => handleSuggestionClick(suggestion)}>
                                             {suggestion.name} ({suggestion.symbol})
                                         </li>
                                     ))}
@@ -338,27 +312,23 @@ const Watchlist = () => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowAddModal(false)}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleAddStock}>
-                        Add Stock
-                    </Button>
+                    <Button variant="secondary" onClick={() => setShowAddModal(false)}>Close</Button>
+                    <Button variant="primary" onClick={handleAddStock}>Add Stock</Button>
                 </Modal.Footer>
             </Modal>
 
+            {/* Error Modal */}
             <Modal show={showErrorModal} onHide={() => setShowErrorModal(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>Error</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>{error}</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowErrorModal(false)}>
-                        Close
-                    </Button>
+                    <Button variant="secondary" onClick={() => setShowErrorModal(false)}>Close</Button>
                 </Modal.Footer>
             </Modal>
         </Container>
+
     );
 };
 

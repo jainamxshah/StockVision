@@ -63,7 +63,7 @@ const StockDetails = () => {
     return (
         <div>
             <div className="container">
-                <div className="stock-dashboard right-container">
+                <div className="stock-dashboard">
                     <div className="stock-header">
                         <h1 className="stock-name">{name}</h1>
                         <br />
@@ -117,11 +117,11 @@ const StockDetails = () => {
                                     <span>{dayLow}</span>
                                 </div>
                             </div>
-                            <div className="col-md-3 mb-3 d-flex align-items-center">
+                            {/* <div className="col-md-3 mb-3 d-flex align-items-center">
                                 <div className="slider-range w-100">
                                     <span className="range-marker" style={{ left: '30%' }}></span>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="col-md-3 mb-3">
                                 <div className="metric">
                                     <p>Today's High</p>
@@ -156,11 +156,11 @@ const StockDetails = () => {
                                     <span>{week52Low}</span>
                                 </div>
                             </div>
-                            <div className="col-md-3 mb-3 d-flex align-items-center">
+                            {/* <div className="col-md-3 mb-3 d-flex align-items-center">
                                 <div className="slider-range w-100">
                                     <span className="range-marker" style={{ left: '80%' }}></span>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="col-md-3 mb-3">
                                 <div className="metric">
                                     <p>52W High</p>

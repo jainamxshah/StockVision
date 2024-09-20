@@ -71,10 +71,10 @@ const Graph = ({ symbol, period }) => {
                 },
                 autosize: true,
                 margin: {
-                    l: 50,
-                    r: 50,
+                    l: 80,
+                    r: 70,
                     b: 50,
-                    t: 50,
+                    t: 30,
                     pad: 1,
                 },
                 hovermode: 'closest',

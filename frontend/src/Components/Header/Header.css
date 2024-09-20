@@ -34,7 +34,7 @@
   transition: color 0.3s; /* Smooth color transition on hover */
   font-weight: 700;
   text-align: right;
-  align-items: end;
+  
 }
 
 .nav-link:hover {
