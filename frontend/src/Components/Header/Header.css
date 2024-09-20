@@ -1,0 +1,131 @@
+/* Navbar Styling */
+.custom-navbar {
+  border-bottom: 1px solid #eaeaea;
+  padding: 0.5rem 1rem; /* Adjust padding for navbar */
+  font-family: var(--head-font);
+  
+}
+
+/* Brand Name Styling */
+.custom-navbar .navbar-brand.brand-name {
+  font-size: 1.75rem; /* Adjust the font size for prominence */
+  font-weight: bold; /* Bold for emphasis */
+  color: var(--head-text-color); /* Brand color */
+  text-transform: uppercase; /* Uppercase for a clean look */
+  font-family: var(--content-font-family);
+  margin-right: 100px; /* Space from other elements */
+}
+
+/* Increase specificity to ensure styling is applied */
+.custom-navbar .navbar-brand {
+  font-size: 1.75rem; /* Ensure size is consistent */
+  font-weight: bold; /* Ensure weight is consistent */
+  color: #007bff; /* Ensure color is consistent */
+}
+.custom-navbar .login-button{
+  font-size: 1rem; /* Consistent button font size */
+  margin-left: 1rem; 
+}
+/* Link Styling */
+.custom-navbar .nav-link {
+  font-size: 1rem; /* Adjust font size for readability */
+  color: #555; /* Slightly lighter color for links */
+  margin-right: 1.5rem; /* Space between links */
+  transition: color 0.3s; /* Smooth color transition on hover */
+  font-weight: 700;
+  text-align: right;
+  
+}
+
+.nav-link:hover {
+  color: #007bff; /* Change color on hover */
+}
+
+/* Search Form Styling */
+.search-form {
+  flex-grow: 1; /* Make form expand to fill available space */
+  margin-right: 2rem; /* Space between search and links */
+}
+
+.search-input {
+  width: 100%; /* Ensure full width */
+}
+/* Login Button Styling */
+.custom-navbar .login-button {
+  font-size: 1rem; /* Consistent button font size */
+  margin-left: 1rem; /* Space between login button and other elements */
+  background-color: #fff; /* Custom background color */
+  color: var(--head-text-color); /* Text color for the button */
+  border: 1px solid var(--head-text-color); /* Ensure proper border behavior */
+  transition: background-color 0.3s, border-color 0.3s; /* Smooth transition for hover effects */
+  font-weight: 700;
+  
+}
+
+.custom-navbar .login-button:hover {
+  background-color: var(--head-text-color) ; /* Darker background on hover */
+  border-color: var(--head-text-color); /* Border color on hover */
+  color: #e9ecef
+}
+
+/* Logout Button Styling */
+.custom-navbar .logout-button {
+  font-weight: 700;
+  font-size: 1rem; /* Consistent button font size */
+  margin-left: 1rem; /* Space between login button and other elements */
+  background-color: #fff; /* Custom background color */
+  color: var(--head-text-color); /* Text color for the button */
+  border: 1px solid var(--head-text-color); /* Ensure proper border behavior */
+  transition: background-color 0.3s, border-color 0.3s; /* Smooth transition for hover effects */
+}
+/* Logout Button Styling */
+.custom-navbar .logout-button:hover {
+  background-color: var(--head-text-color) ; /* Darker background on hover */
+  border-color: var(--head-text-color); /* Border color on hover */
+  color: #e9ecef
+}
+
+/* Responsive Styling */
+@media (max-width: 992px) {
+  .custom-navbar .navbar-brand.brand-name {
+    font-size: 1.5rem; /* Adjust font size for smaller screens */
+    margin-right: 0; /* Remove extra space on smaller screens */
+  }
+
+  .nav-link {
+    font-size: 0.875rem; /* Adjust font size for smaller screens */
+    margin-right: 1rem; /* Reduce space between links */
+  }
+
+  .search-form {
+    margin-right: 1rem; /* Reduce space between search and links */
+  }
+
+  .logout-button {
+    font-size: 0.875rem; /* Adjust font size for smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .custom-navbar {
+    padding: 0.5rem 0.5rem; /* Adjust padding for very small screens */
+  }
+
+  .custom-navbar .navbar-brand.brand-name {
+    font-size: 1.25rem; /* Further reduce font size for very small screens */
+  }
+
+  .nav-link {
+    font-size: 0.75rem; /* Further reduce font size for very small screens */
+    margin-right: 0.5rem; /* Reduce space between links */
+  }
+
+  .search-form {
+    margin-right: 0.5rem; /* Further reduce space between search and links */
+  }
+
+  .login-button, .logout-button {
+    font-size: 0.75rem; /* Further reduce font size for very small screens */
+    margin-left: 0.5rem; /* Reduce space between buttons and other elements */
+  }
+}

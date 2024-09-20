@@ -1,33 +1,21 @@
 .stock-dashboard {
-    max-width: 900px;
-    margin-left: 0px;
+    max-width: 100%;
     padding: 20px;
     border-radius: 10px;
-    background-color: #ffffff;
-    font-family: 'Arial', sans-serif;
 }
 
-/* .container {
-    display: flex;
-    justify-content: space-between;
+.container {
+    /* display: flex; */
+    /* justify-content: space-between; */
     padding: 20px;
-    border: 2px solid #6a0dad;
-} */
-
-.left-container {
-    background-color: #f3f3f3;
-    padding: 20px;
-    width: 30%;
-    height: 500px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+    justify-content: center;
 }
 
 .right-container {
-    background-color: #f9f9f9;
+    /* background-color: #f9f9f9; */
     padding: 20px;
-    width: 70%;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    /* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1); */
     border-radius: 5px;
 }
 
@@ -35,6 +23,7 @@
 .stock-header {
     display: flex;
     justify-content: space-between;
+    font-family: "Montserrat", sans-serif;
     align-items: center;
     margin-bottom: 20px;
     border-bottom: 1px solid #e0e0e0;
@@ -43,10 +32,12 @@
 
 .stock-name {
     font-size: 35px;
-    color: #4b0082;
+    padding-right: 10px;
+    /* color: #4b0082; */
 }
 
 .price-details {
+    font-family: "Open Sans", sans-serif;
     display: flex;
     align-items: center;
 }
@@ -78,19 +69,19 @@
 .graph-section {
     margin: 20px 0;
     padding: 10px;
-    background-color: #f8f8f8;
+    /* background-color: #f8f8f8;  */
     text-align: center;
-    border: 1px solid #e0e0e0;
+    /* border: 1px solid #e0e0e0; */
     border-radius: 10px;
 }
 
 .graph-container {
     margin-top: 20px;
     padding-top: 20px;
-    width: "70%";
-    height: "30%";
-    margin: "auto";
-    border-top: 1px solid #ddd;
+    width: 70%;
+    height: 50%;
+    margin: auto;
+    /* border-top: 1px solid #ddd; */
     
 }
 
@@ -170,6 +161,6 @@
     transition: background-color 0.3s ease;
 }
 
-.time-button:hover {
+/* .time-button:hover {
     background-color: #6a0dad;
-}
+} */

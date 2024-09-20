@@ -1,166 +1,87 @@
-// import React, { Component } from "react";
-// import CanvasJSReact from "@canvasjs/react-stockcharts";
-// // var CanvasJSReact = require('@canvasjs/react-stockcharts');
-// var CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
+import React, { useEffect, useState } from 'react';
+import Plot from 'react-plotly.js';
 
-// class Graph extends Component {
-
-//     constructor(props) {
-//         super(props);
-//         this.generateDataPoints = this.generateDataPoints.bind(this);
-//     }
-
-//     generateDataPoints(noOfDps) {
-//         var xVal = 1, yVal = 100;
-//         var dps = [];
-//         for (var i = 0; i < noOfDps; i++) {
-//             yVal = yVal + Math.round(5 + Math.random() * (-5 - 5));
-//             dps.push({ x: xVal, y: yVal });
-//             xVal++;
-//         }
-//         return dps;
-//     }
-
-//     render() {
-//         const options = {
-//             title: {
-//                 text: "React StockChart with Numeric Axis"
-//             },
-//             animationEnabled: true,
-//             exportEnabled: true,
-//             charts: [{
-//                 axisX: {
-//                     crosshair: {
-//                         enabled: true,
-//                         snapToDataPoint: true
-//                     }
-//                 },
-//                 axisY: {
-//                     crosshair: {
-//                         enabled: true,
-//                         snapToDataPoint: true
-//                     }
-//                 },
-//                 data: [{
-//                     type: "spline",
-//                     dataPoints: this.generateDataPoints(100000)
-//                     // dataPoints: fetchAllData('hcltech.ns')
-//                 }]
-//             }],
-//             rangeSelector: {
-//                 inputFields: {
-//                     startValue: 4000,
-//                     endValue: 6000,
-//                     valueFormatString: "###0"
-//                 },
-
-//                 buttons: [{
-//                     label: "1000",
-//                     range: 1000,
-//                     rangeType: "number"
-//                 }, {
-//                     label: "2000",
-//                     range: 2000,
-//                     rangeType: "number"
-//                 }, {
-//                     label: "5000",
-//                     range: 5000,
-//                     rangeType: "number"
-//                 }, {
-//                     label: "All",
-//                     rangeType: "all"
-//                 }]
-//             }
-//         };
-//         const containerProps = {
-//             // width: "70%",
-//             // height: "30%",
-//             // margin: "auto"
-//             width: '100%', height: '400px', margin: '0px',display: 'flex',justifyContent: 'flex-start',alignItems: 'left'
-//         };
-//         return (
-//             <div>
-//                 <div>
-//                     <CanvasJSStockChart containerProps={containerProps} options={options}
-//                     /* onRef = {ref => this.chart = ref} */
-//                     />
-//                 </div>
-//             </div>
-//         );
-//     }
-// };
-
-// export default Graph; 
-
-import React, { useEffect, useRef } from 'react';
-import { Chart, LineElement, PointElement, LinearScale, CategoryScale, LineController, Title, Tooltip, Legend } from 'chart.js';
-
-Chart.register(LineElement, PointElement, LinearScale, CategoryScale, LineController, Title, Tooltip, Legend);
-
-const Graph = () => {
-    const chartRef = useRef(null);
-    const canvasRef = useRef(null);
-
-    const labels = Array.from({ length: 100 }, (_, index) => {
-        const date = new Date();
-        date.setDate(date.getDate() - (100 - index)); 
-        return date.toISOString().split('T')[0]; 
-    });
-
-    const data = Array.from({ length: 100 }, () => {
-        return (Math.random() * (200 - 100) + 100).toFixed(2);
-    });
+const Graph = ({ symbol, period }) => {
+    const [data, setData] = useState({ x: [], y: [], color: 'blue' });
 
     useEffect(() => {
-        const ctx = canvasRef.current.getContext('2d');
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/stockgraph/stockgraph-data/?stockname=${symbol}&period=${period}`);
+                const apiData = await response.json();
 
-        if (chartRef.current) {
-            chartRef.current.destroy();
-        }
+                // Filter out data points with missing or invalid 'Close' values
+                const filteredData = apiData.filter(item => item.Close !== null && item.Close !== undefined && !isNaN(item.Close) &&
+                    item.Open !== null && item.Open !== undefined && !isNaN(item.Open)); // Ensure Open prices are valid
 
-        chartRef.current = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels, 
-                datasets: [
-                    {
-                        label: 'Stock Price',
-                        data: data, 
-                        fill: false,
-                        backgroundColor: '#333',
-                        borderColor: 'rgba(75,192,192,1)',
-                    },
-                ],
-            },
-            options: {
-                scales: {
-                    x: {
-                        type: 'category', 
-                        title: {
-                            display: true,
-                            text: 'Date',
-                        },
-                    },
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Price',
-                        },
-                    },
-                },
-                maintainAspectRatio: false, 
-            },
-        });
+                const x = filteredData.map(item => new Date(item.Datetime)); // Convert to Date objects
+                const y = filteredData.map(item => parseFloat(item.Close.toFixed(2))); // Ensure values are floats
+                const openPrices = filteredData.map(item => parseFloat(item.Open.toFixed(2))); // Ensure values are floats
 
-        return () => {
-            if (chartRef.current) {
-                chartRef.current.destroy();
+                // Determine the color based on whether the current price is greater than the open price
+                const color = y[y.length - 1] > openPrices[openPrices.length - 1] ? 'green' : 'red';
+
+                setData({ x, y, color });
+            } catch (error) {
+                console.error('Error fetching data:', error);
             }
         };
-    }, [labels, data]); 
 
-    return <canvas ref={canvasRef} style={{ width: '100%', height: '400px', margin: '0 auto' }} />;
+        fetchData();
+    }, [symbol, period]);
+
+    // Calculate the minimum and maximum values for the x-axis and y-axis based on filtered data
+    const minX = data.x.length > 0 ? new Date(Math.min(...data.x.map(date => date.getTime()))) : new Date();
+    const maxX = data.x.length > 0 ? new Date(Math.max(...data.x.map(date => date.getTime()))) : new Date();
+    const minY = data.y.length > 0 ? Math.min(...data.y) : 0;
+    const maxY = data.y.length > 0 ? Math.max(...data.y) : 1;
+
+    // Set narrower ranges to zoom in
+    const xAxisRange = [new Date(minX.getTime() - (maxX.getTime() - minX.getTime()) * 0.1), new Date(maxX.getTime() + (maxX.getTime() - minX.getTime()) * 0.1)]; // Adjust zoom factor as needed
+    const yAxisRange = [minY - (maxY - minY) * 0.1, maxY + (maxY - minY) * 0.1]; // Adjust zoom factor as needed
+
+    return (
+        <Plot
+            data={[{
+                x: data.x,
+                y: data.y,
+                type: 'scatter',
+                mode: 'lines',
+                fill: 'tozeroy', // Creates the area chart effect
+                marker: { color: data.color }, // Set color based on condition
+                line: { shape: 'linear' },
+            }]}
+            layout={{
+                title: 'Stock Price Over Time',
+                xaxis: {
+                    title: 'Date',
+                    type: 'date',
+                    tickformat: "%d-%m-%Y %H:%M", // Adjust based on your data format
+                    tickmode: 'auto', // Auto-adjust tick intervals
+                    range: xAxisRange, // Set the zoomed-in range
+                },
+                yaxis: {
+                    title: 'Price',
+                    range: yAxisRange, // Set the zoomed-in range
+                    tickmode: 'linear', // Use linear ticks
+                    dtick: (maxY - minY) / 10, // Set interval between ticks
+                    showline: true, // Show axis line
+                    zeroline: true, // Show zero line
+                    showgrid: true, // Show grid lines
+                },
+                autosize: true,
+                margin: {
+                    l: 50,
+                    r: 50,
+                    b: 50,
+                    t: 50,
+                    pad: 1,
+                },
+                hovermode: 'closest',
+                showlegend: false,
+            }}
+        />
+    );
 };
 
 export default Graph;

@@ -13,6 +13,9 @@ from .serializers import (
 from .models import User
 from rest_framework.permissions import AllowAny
 from django.contrib.auth.hashers import check_password
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 
 class SignUpView(APIView):
     permission_classes = [AllowAny]
@@ -25,9 +28,9 @@ class SignUpView(APIView):
 
             # Check if the username or email already exists
             if User.objects.filter(username=username).exists():
-                return Response({"username": "This username is already taken."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": "This username is already taken."}, status=status.HTTP_400_BAD_REQUEST)
             if User.objects.filter(email=email).exists():
-                return Response({"email": "This email is already registered."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": "This email is already registered."}, status=status.HTTP_400_BAD_REQUEST)
 
             # Create the user
             user = User.objects.create_user(
@@ -36,8 +39,9 @@ class SignUpView(APIView):
                 password=serializer.validated_data['password']
             )
             return Response({"message": "User created successfully"}, status=status.HTTP_201_CREATED)
-        
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LoginView(APIView):
     permission_classes = [AllowAny]
@@ -51,33 +55,24 @@ class LoginView(APIView):
             try:
                 user = User.objects.get(email=email)
             except User.DoesNotExist:
-                return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+                return Response({"error": "Invalid email or password"}, status=status.HTTP_401_UNAUTHORIZED)
 
             if check_password(password, user.password):
-                # Manually create JWT tokens
-                access_token_expiry = datetime.utcnow() + timedelta(minutes=5)
-                refresh_token_expiry = datetime.utcnow() + timedelta(days=7)
-
-                access_token = jwt.encode({
-                    'user_id': str(user.id),
-                    'exp': access_token_expiry
-                }, settings.SECRET_KEY, algorithm='HS256')
-
-                refresh_token = jwt.encode({
-                    'user_id': str(user.id),
-                    'exp': refresh_token_expiry
-                }, settings.SECRET_KEY, algorithm='HS256')
-
+                # Use simplejwt to generate tokens
+                refresh = RefreshToken.for_user(user)
                 return Response({
-                    "refresh": refresh_token,
-                    "access": access_token,
+                    "refresh": str(refresh),
+                    "access": str(refresh.access_token),
                 }, status=status.HTTP_200_OK)
 
-            return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"error": "Invalid email or password"}, status=status.HTTP_401_UNAUTHORIZED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class PasswordResetRequestView(APIView):
+    permission_classes = [AllowAny]
+
     def post(self, request):
         serializer = PasswordResetRequestSerializer(data=request.data)
         if serializer.is_valid():
@@ -85,12 +80,11 @@ class PasswordResetRequestView(APIView):
             try:
                 user = User.objects.get(email=email)
             except User.DoesNotExist:
-                return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"error": "If the email is registered, a password reset link will be sent"}, status=status.HTTP_200_OK)
 
-            token = jwt.encode({
-                'user_id': str(user.id),
-                'exp': datetime.utcnow() + timedelta(hours=1)
-            }, settings.SECRET_KEY, algorithm='HS256')
+            # Create reset token
+            token = RefreshToken.for_user(user).access_token
+            token.set_exp(lifetime=timedelta(hours=1))  # Token expires in 1 hour
 
             reset_link = f"http://localhost:8000/api/users/reset-password/{token}"
             send_mail(
@@ -100,11 +94,14 @@ class PasswordResetRequestView(APIView):
                 [email],
                 fail_silently=False,
             )
-            return Response({"message": "Password reset link sent"}, status=status.HTTP_200_OK)
+            return Response({"message": "If the email is registered, a password reset link has been sent"}, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class PasswordResetView(APIView):
+    permission_classes = [AllowAny]
+
     def post(self, request, token):
         serializer = PasswordResetSerializer(data=request.data)
         if serializer.is_valid():
@@ -120,3 +117,15 @@ class PasswordResetView(APIView):
             return Response({"message": "Password reset successfully"}, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class GetUsernameView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        # Access the user from the request
+        user = request.user
+        
+        # Return the username
+        return Response({"username": user.username}, status=status.HTTP_200_OK)
+

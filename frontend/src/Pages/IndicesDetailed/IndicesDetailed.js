@@ -1,114 +1,86 @@
-import React from 'react';
-import './IndicesDetailed.css';
-import Graph from './Graph.js';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./IndicesDetailed.css"; // Ensure the styles are appropriate for your layout
 
-const IndicesDetailed = () => {
-    const stockName = 'Tata Steel';
-    const currentPrice = 152.76;
-    const priceChange = -0.21; 
-    const percentageChange = -0.14; 
-    const dayLow = 152.47;
-    const dayHigh = 155.25;
-    const weekLow = 114.60;
-    const weekHigh = 184.60;
-    const openPrice = 153.00;
-    const prevClose = 152.97;
-    const volume = '5,51,34,023';
-    const totalTradedValue = '842 Cr';
-    const upperCircuit = 168.03;
-    const lowerCircuit = 137.48;
+const AllIndices = () => {
+    const [stockDataList, setStockDataList] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchIndicePrices = async () => {
+            try {
+                const response = await axios.get(
+                    "http://127.0.0.1:8000/api/indices/indice-price/live_prices/"
+                );
+                setStockDataList(response.data);
+            } catch (err) {
+                console.error(err);
+                setError("An error occurred while fetching stock prices.");
+            }
+        };
+
+        fetchIndicePrices();
+        const intervalId = setInterval(fetchIndicePrices, 10000);
+
+        return () => clearInterval(intervalId);
+    }, []);
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
+    if (!stockDataList.length) return <div>No stock data available</div>;
+
+    // Format numbers
+    const roundToTwo = (num) => (num ? num.toFixed(2) : "N/A");
+    const getStockChangeClass = (change) => (change >= 0 ? "positive" : "negative");
 
     return (
-        <div>
-            
-            <div class="container">
-                <div className="stock-dashboard right-container">
-                    <div className="stock-header">
-                        <h1 className="stock-name">{stockName}</h1>
-                        <div className="price-details">
-                            <span className="current-price">₹{currentPrice.toFixed(2)}</span>
-                            <span className={`price-change ${priceChange >= 0 ? 'positive' : 'negative'}`}>
-                                {priceChange >= 0 ? `+${priceChange}` : priceChange} ({percentageChange >= 0 ? `+${percentageChange}` : percentageChange}%)
+        <div className="stock-container">
+            <h3>All Indices</h3>
+            <div className="stock-cards">
+                {stockDataList.map((stock, index) => (
+                    <div key={index} className="stock-card">
+                        <h3>{stock.name}</h3>
+                        <hr />
+                        <p>
+                            <span>Current Price: </span>
+                            <span>{roundToTwo(stock.current_price)}</span>
+                        </p>
+                        <p className={getStockChangeClass(stock.priceChange)}>
+                            <span>Change: </span>
+                            <span>
+                                {roundToTwo(stock.priceChange)} ({roundToTwo(stock.percent_change)}%)
                             </span>
-                            <span className="timeframe">1D</span>
-                        </div>
+                        </p>
+                        <p>
+                            <span>Day Low: </span>
+                            <span>{roundToTwo(stock.dayLow)}</span>
+                        </p>
+                        <p>
+                            <span>Day High: </span>
+                            <span>{roundToTwo(stock.dayHigh)}</span>
+                        </p>
+                        <p>
+                            <span>52-Week Low: </span>
+                            <span>{roundToTwo(stock.week52Low)}</span>
+                        </p>
+                        <p>
+                            <span>52-Week High: </span>
+                            <span>{roundToTwo(stock.week52High)}</span>
+                        </p>
+                        <p>
+                            <span>Open Price: </span>
+                            <span>{roundToTwo(stock.openPrice)}</span>
+                        </p>
+                        <p>
+                            <span>Previous Close: </span>
+                            <span>{roundToTwo(stock.prevClose)}</span>
+                        </p>
                     </div>
-
-                    <div className="graph-section">
-                        <div className="graph-placeholder"><Graph /></div>
-                    </div>
-
-                    <div class="button-container">
-                        <button class="time-button">1D</button>
-                        <button class="time-button">5D</button>
-                        <button class="time-button">1MO</button>
-                        <button class="time-button">3MO</button>
-                        <button class="time-button">YTD</button>
-                        <button class="time-button">1Y</button>
-                        <button class="time-button">5Y</button>
-                        <button class="time-button">MAX</button>
-                    </div>
-
-                    <div className="performance-metrics">
-                        <div className="metric">
-                            <p>Today's Low</p>
-                            <span>{dayLow}</span>
-                        </div>
-                        <div className="slider-range">
-                            <span className="range-marker" style={{ left: '30%' }}></span>
-                        </div>
-                        <div className="metric">
-                            <p>Today's High</p>
-                            <span>{dayHigh}</span>
-                        </div>
-
-
-                        <div className="metric">
-                            <p>52W Low</p>
-                            <span>{weekLow}</span>
-                        </div>
-                        <div className="slider-range">
-                            <span className="range-marker" style={{ left: '80%' }}></span>
-                        </div>
-                        <div className="metric">
-                            <p>52W High</p>
-                            <span>{weekHigh}</span>
-                        </div>
-                    </div>
-
-                    <div className="additional-metrics">
-                        <div className="metric">
-                            <p>Open</p>
-                            <span>{openPrice}</span>
-                        </div>
-                        <div className="metric">
-                            <p>Prev. Close</p>
-                            <span>{prevClose}</span>
-                        </div>
-                        <div className="metric">
-                            <p>Volume</p>
-                            <span>{volume}</span>
-                        </div>
-                        <div className="metric">
-                            <p>Total Traded Value</p>
-                            <span>{totalTradedValue}</span>
-                        </div>
-                        <div className="metric">
-                            <p>Upper Circuit</p>
-                            <span>{upperCircuit}</span>
-                        </div>
-                        <div className="metric">
-                            <p>Lower Circuit</p>
-                            <span>{lowerCircuit}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="left-container">
-                    Payment
-                </div>
+                ))}
             </div>
         </div>
     );
 };
 
-export default IndicesDetailed;
+export default AllIndices;

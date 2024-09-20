@@ -1,115 +1,335 @@
-import React, { useState } from 'react';
-import { FaEdit, FaPlus } from 'react-icons/fa'; 
-import { Button, Container, Row, Col } from 'react-bootstrap';
-import './watchlist.css';
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Button, Container, Modal, Form } from 'react-bootstrap';
+import jwtDecode from 'jwt-decode';
+import { FaEdit, FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom'; // Import Link
+import './watchlist.css'
 
+// Styled components
 const UserWatchlistButton = styled(Button)`
-  background-color: #dcd0ff; /* Light purple color */
-  color: #4a3f7f; /* Darker text color for contrast */
+  background-color: #dcd0ff;
+  color: #4a3f7f;
   border: none;
-  border-radius: 25px; /* Rounded button */
-  padding: 10px 20px;
+  border-radius: 25px;
+  padding: 15px 20px;
   display: flex;
   align-items: center;
+  margin-bottom : -15px;
   gap: 10px;
-  font-size: 16px;
+  font-family : var(--content-font-family)
+  font-size: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   
   &:hover {
-    background-color: #c3baff; /* Slightly darker on hover */
+    background-color: #c3baff;
+    color: #fff;
   }
 `;
 
 const AddStockButton = styled(Button)`
-  background-color: #dcd0ff; /* Light purple color */
-  color: #4a3f7f; /* Darker text color for contrast */
+  background-color: #dcd0ff;
+  color: #4a3f7f;
   border: none;
-  border-radius: 25px; /* Rounded button */
-  padding: 10px;
+  border-radius: 25px;
+  padding: 11px;
   display: flex;
-  margin-left: auto;
+  margin-top: -45px;
+  margin-left: 900px;
+  margin-bottom:20px;
   align-items: center;
-  font-size: 20px;
+  font-size: 18px;
+  font-family : var(--content-font-family)
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
-  &:hover { 
-    background-color: #c3baff; /* Slightly darker on hover */
+
+  &:hover {
+    background-color: #c3baff;
+    color: #fff
   }
 `;
 
+// Stock suggestions with full names
+const stockSuggestions = [
+    { symbol: "RELIANCE.NS", name: "Reliance Industries Limited" },
+    { symbol: "TCS.NS", name: "Tata Consultancy Services" },
+    // Add other suggestions here
+];
+
 const Watchlist = () => {
-  const [stocks, setStocks] = useState([
-    { id: 1, company: 'Apple Inc.', shareAmount: '$145.00', avgPrice: '$150.00', mktPrice: '$145.00', changePercent: '+1.6%' },
-    { id: 2, company: 'Alphabet Inc.', shareAmount: '$2735.00', avgPrice: '$2800.00', mktPrice: '$2735.00', changePercent: '-0.5%' },
-    { id: 3, company: 'Amazon.com Inc.', shareAmount: '$3450.00', avgPrice: '$3400.00', mktPrice: '$3450.00', changePercent: '+1.2%' },
-    { id: 4, company: 'Tesla Inc.', shareAmount: '$650.00', avgPrice: '$620.00', mktPrice: '$650.00', changePercent: '-0.8%' },
-    { id: 5, company: 'Microsoft Corp.', shareAmount: '$299.00', avgPrice: '$290.00', mktPrice: '$299.00', changePercent: '+2.0%' }
-  ]);
+    const [stocks, setStocks] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [newStockSymbol, setNewStockSymbol] = useState('');
+    const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+    const [username, setUsername] = useState('');
+    const [error, setError] = useState('');
+    const [showErrorModal, setShowErrorModal] = useState(false);
 
-  const handleDelete = (id) => {
-    setStocks(stocks.filter(stock => stock.id !== id));
-  };
+    const token = localStorage.getItem('access_token');
 
-  return (
-    <Container className="watchlist-container">
-      <Row className="user-watchlist-button-container">
-         <Col>
-          <UserWatchlistButton>
-            <FaEdit className="icon" /> User's Watchlist
-          </UserWatchlistButton>
-        </Col>
-        <Col className="text-end">
-          <AddStockButton>
-            <FaPlus className="icon" />
-          </AddStockButton>
-        </Col>
-      </Row>
+    useEffect(() => {
+        const fetchUsername = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/api/users/get-username/', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
 
-      <Row className="search-container">
-        <Col>
-          <input className="search-input" placeholder="Search stocks..." />
-        </Col>
-      </Row>
+                if (!response.ok) {
+                    throw new Error('Failed to fetch username');
+                }
 
-      <div className="stock-info-container">
-        <Row className="stock-header">
-          <Col className="stock-column"><strong>Company</strong></Col>
-          <Col className="stock-column"><strong>Change (%)</strong></Col>
-          <Col className="stock-column"><strong>MKT Price</strong></Col>
-          <Col className="stock-column"><strong>Avg Price</strong></Col>
-        </Row>
-        <div className="stock-list-container">
-          {stocks.map(stock => (
-            <div className="stock-box" key={stock.id}>
-              <div className="stock-row">
-                <div className="stock-column">
-                  <div>{stock.company}</div>
-                </div>
-                <div className="stock-column">
-                  <div className={`stock-change-percent ${parseFloat(stock.changePercent) > 0 ? 'up' : 'down'}`}>
-                    {stock.changePercent}
-                  </div>
-                </div>
-                <div className="stock-column">
-                  <div>{stock.mktPrice}</div>
-                </div>
-                <div className="stock-column">
-                  <div>{stock.avgPrice}</div>
-                </div>
-              </div>
-              <button
-                className="delete-button"
-                onClick={() => handleDelete(stock.id)}
-              >
-                ×
-              </button>
+                const data = await response.json();
+                setUsername(data.username);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        const fetchWatchlistData = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/watchlist/watchlist/companies/', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+        
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+        
+                const data = await response.json();
+        
+                // Ensure 'data' is an array
+                if (!Array.isArray(data)) {
+                    throw new Error('Expected an array of stocks');
+                }
+        
+                const detailedStocks = await Promise.all(
+                    data.map(async (stock) => {
+                        const detailResponse = await fetch(
+                            `http://127.0.0.1:8000/api/stockdata/stock-detail-data/?stockname=${stock.stock_name}`,
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${token}`,
+                                    'Content-Type': 'application/json',
+                                },
+                            }
+                        );
+        
+                        const details = await detailResponse.json();
+                        return {
+                            ...stock,
+                            name: details.name,
+                            mktPrice: details.current_price,
+                            priceChange: details.priceChange,
+                            changePercent: details.percent_change,
+                            volume: details.volume,
+                            dayHigh: details.dayHigh,
+                            dayLow: details.dayLow,
+                        };
+                    })
+                );
+        
+                setStocks(detailedStocks);
+            } catch (error) {
+                setError(error.message);
+                setShowErrorModal(true);
+            } finally {
+                setLoading(false);
+            }
+        };
+        
+        fetchUsername();
+        fetchWatchlistData();
+    }, [token]);
+
+    const handleAddStock = async () => {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/watchlist/watchlist/add-stock/', {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ stock_name: newStockSymbol }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to add stock');
+            }
+            // Fetch updated stocks after adding
+            const updatedStocks = await response.json();
+            setStocks(updatedStocks);
+            setShowAddModal(false);
+            setNewStockSymbol('');
+        } catch (error) {
+            setError(error.message);
+            setShowErrorModal(true);
+        }
+    };
+
+    const handleDeleteStock = async (stockName) => {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/watchlist/watchlist/remove-stock/', {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ stock_name: stockName }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to delete stock');
+            }
+
+
+            // Update stocks after deletion
+            setStocks(stocks.filter((stock) => stock.stock_name !== stockName));
+        } catch (error) {
+            setError(error.message);
+            setShowErrorModal(true);
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        setNewStockSymbol(value);
+
+        // Filter suggestions based on the input
+        if (value.length > 0) {
+            const filtered = stockSuggestions
+                .filter(stock =>
+                    stock.name.toLowerCase().includes(value.toLowerCase())
+                );
+            setFilteredSuggestions(filtered);
+        } else {
+            setFilteredSuggestions([]);
+        }
+    };
+
+    const handleSuggestionClick = (stock) => {
+        setNewStockSymbol(stock.symbol);
+        setFilteredSuggestions([]);
+    };
+
+    const sortedStocks = [...stocks].sort((a, b) => parseFloat(b.changePercent) - parseFloat(a.changePercent));
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <Container className="watchlist-container">
+            <div className="watchlist-hexader">
+                <UserWatchlistButton>
+                    {username}'s Watchlist
+                </UserWatchlistButton>
+                <AddStockButton onClick={() => setShowAddModal(true)}>
+                    Add to watchlist<FaPlus className="mx-2 icon" />
+                </AddStockButton>
             </div>
-          ))}
-        </div>
-      </div>
-    </Container>
-  );
+
+            <Row>
+                <Col xs={12} md={12} lg={12} className="mb-3">
+                    <div className="stock-header d-none d-md-flex" style={{color : 'white'}}>
+                        <div className="column-header">COMPANY NAME</div>
+                        <div className="column-header">% CHANGE</div>
+                        <div className="column-header">MKT PRICE</div>
+                        <div className="column-header">VOLUME</div>
+                        <div className="column-header">DAY HIGH</div>
+                        <div className="column-header">DAY LOW</div>
+                        <div className="column-header">ACTION</div>
+                    </div>
+                    <div className="stock-list-container">
+                        {sortedStocks.map(stock => (
+                            <a href={`/stock/${stock.stock_name}`} key={stock.stock_name} className="stock-box" style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <div className="stock-row" key={stock.stock_name}>
+                                <div className="stock-column">
+                                    <div className="stock-column" style={{fontWeight: '600' }}> {stock.name}</div>
+                                </div>
+                                <div className="stock-column">
+                                    <div className={parseFloat(stock.priceChange) > 0 ? 'stock-price-change-up' : 'stock-price-change-down'}>
+                                        {parseFloat(stock.changePercent).toFixed(2)} %
+                                    </div>
+                                </div>
+                                <div className="stock-column">
+                                    <div>{parseFloat(stock.mktPrice).toFixed(2)}</div>
+                                </div>
+                                <div className="stock-column">
+                                    <div>{parseFloat(stock.volume).toFixed(2)}</div>
+                                </div>
+                                <div className="stock-column">
+                                    <div>{parseFloat(stock.dayHigh).toFixed(2)}</div>
+                                </div>
+                                <div className="stock-column">
+                                    <div>{parseFloat(stock.dayLow).toFixed(2)}</div>
+                                </div>
+                                <div className="stock-column">
+                                    <Button variant="danger" onClick={() => handleDeleteStock(stock.stock_name)}>
+                                        Remove
+                                    </Button>
+                                </div>
+                            </div>
+                            </a>
+                        ))}
+                    </div>
+                </Col>
+            </Row>
+
+            {/* Add Stock Modal */}
+            <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add Stock</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="formStockSymbol">
+                            <Form.Label>Stock Symbol</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newStockSymbol}
+                                onChange={handleInputChange}
+                                placeholder="Enter stock symbol"
+                            />
+                            {filteredSuggestions.length > 0 && (
+                                <ul className="suggestions-list">
+                                    {filteredSuggestions.map((suggestion) => (
+                                        <li key={suggestion.symbol} onClick={() => handleSuggestionClick(suggestion)}>
+                                            {suggestion.name} ({suggestion.symbol})
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowAddModal(false)}>Close</Button>
+                    <Button variant="primary" onClick={handleAddStock}>Add Stock</Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Error Modal */}
+            <Modal show={showErrorModal} onHide={() => setShowErrorModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Error</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{error}</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowErrorModal(false)}>Close</Button>
+                </Modal.Footer>
+            </Modal>
+        </Container>
+
+    );
 };
 
 export default Watchlist;

@@ -1,150 +1,249 @@
-// src/StockMarket.js
-import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import './portfolio.css'; 
-import { Container, Row, Col } from 'react-bootstrap';
-import { FaChevronDown, FaTimes } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './portfolio.css';
+import { Container, Row, Col, Modal, Button, Form } from 'react-bootstrap';
+import axios from 'axios';
 
 const StockMarket = () => {
     const [selectedOption, setSelectedOption] = useState('BUY');
-    const stocks = [
-        { id: 1, company: 'Apple Inc.', shareAmount: '$145.00', avgPrice: '$150.00', mktPrice: '$145.00', priceChange: '+2.3%', returnAmount: '$10.00', returnPercent: '+1.5%', currentPrice: '$155.00', adjustedPrice: '+$10.00' },
-        { id: 2, company: 'Alphabet Inc.', shareAmount: '$2735.00', avgPrice: '$2800.00', mktPrice: '$2735.00', priceChange: '-1.2%', returnAmount: '-$20.00', returnPercent: '-0.8%', currentPrice: '$2715.00', adjustedPrice: '-$20.00' },
-        { id: 3, company: 'Amazon.com Inc.', shareAmount: '$3450.00', avgPrice: '$3400.00', mktPrice: '$3450.00', priceChange: '+0.8%', returnAmount: '$30.00', returnPercent: '+1.0%', currentPrice: '$3480.00', adjustedPrice: '+$30.00' },
-        { id: 4, company: 'Tesla Inc.', shareAmount: '$650.00', avgPrice: '$620.00', mktPrice: '$650.00', priceChange: '-0.5%', returnAmount: '-$5.00', returnPercent: '-0.8%', currentPrice: '$645.00', adjustedPrice: '-$5.00' },
-        { id: 5, company: 'Microsoft Corp.', shareAmount: '$299.00', avgPrice: '$290.00', mktPrice: '$299.00', priceChange: '+1.4%', returnAmount: '$10.00', returnPercent: '+1.2%', currentPrice: '$309.00', adjustedPrice: '+$10.00' }
-    ];
+    const [stocks, setStocks] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [currentPortfolio, setCurrentPortfolio] = useState(0);
+    const [invested, setInvested] = useState(0);
+    const [totalReturns, setTotalReturns] = useState(0);
+    const [oneDayReturns, setOneDayReturns] = useState(0);
+    const [showBuyModal, setShowBuyModal] = useState(false);
+    const [showSellModal, setShowSellModal] = useState(false);
+    const [currentStock, setCurrentStock] = useState(null);
+    const [shares, setShares] = useState('');
+
+    // Retrieve token from local storage
+    const token = localStorage.getItem('access_token');
+
+    // Fetch stock data and portfolio details
+    useEffect(() => {
+        const fetchStocks = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/portfolio/portfolio/companies/', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+
+                setStocks(response.data.companies);
+                setCurrentPortfolio(parseFloat(response.data.total_current_value) || 0);
+                setInvested(parseFloat(response.data.total_invested) || 0);
+                setTotalReturns(parseFloat(response.data.total_profit_loss) || 0);
+                setOneDayReturns(parseFloat(0));
+                setLoading(false);
+            } catch (error) {
+                setError(error.message);
+                setLoading(false);
+            }
+        };
+
+        fetchStocks();
+    }, [token]);
 
     const handleOptionClick = (option) => {
         setSelectedOption(option);
     };
 
-    const totalInvested = 10000;
-    const totalReturns = 500;
-    const oneDayReturns = 20;
+    const handleShowBuyModal = (stock) => {
+        setCurrentStock(stock);
+        setShowBuyModal(true);
+    };
+
+    const handleCloseBuyModal = () => {
+        setShowBuyModal(false);
+        setShares('');
+    };
+
+    const handleShowSellModal = (stock) => {
+        setCurrentStock(stock);
+        setShowSellModal(true);
+    };
+
+    const handleCloseSellModal = () => {
+        setShowSellModal(false);
+        setShares('');
+    };
+
+    const handleBuySubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/portfolio/portfolio/add-stock/', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    stock_name: currentStock.stock_name,
+                    quantity: parseInt(shares, 10),
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            console.log('Response data:', data);
+
+            handleCloseBuyModal();
+            window.location.reload();
+        } catch (error) {
+            console.error('Error buying stock:', error);
+            setError('Error buying stock. Please try again.');
+        }
+    };
+
+    const handleSellSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/portfolio/portfolio/sell-stock/', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    stock_name: currentStock.stock_name,
+                    quantity: parseInt(shares, 10),
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            console.log('Response data:', data);
+
+            handleCloseSellModal();
+            window.location.reload();
+        } catch (error) {
+            console.error('Error selling stock:', error);
+            setError('Error selling stock. Please try again.');
+        }
+    };
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <Container className="stock-market-container">
-            <div className="header-row">
+            <div className="header-row text-center">
                 <div className="header-part">
-                    <div className="header-part-title">${totalInvested.toFixed(2)}</div>
+                    <div className="header-part-title">{currentPortfolio.toFixed(2)}</div>
                     <div className="header-part-subtitle">Current Value</div>
                 </div>
                 <div className="header-part">
-                    <div className="details-part">Invested Value: ${totalInvested.toFixed(2)}</div>
+                    <div className="details-part">Invested Value: {invested.toFixed(2)}</div>
                     <div className="details-part" style={{ color: totalReturns >= 0 ? 'green' : 'red' }}>
-                        Total Returns: ${totalReturns.toFixed(2)}
+                        Total Returns: {totalReturns.toFixed(2)}
                     </div>
-                    <div className="details-part" style={{ color: oneDayReturns >= 0 ? 'green' : 'red' }}>
-                        1D Returns: ${oneDayReturns.toFixed(2)}
-                    </div>
-                </div>
-                <div className="footer-part">
-                    VIEW ALL ORDERS
                 </div>
             </div>
             <Row>
-                <Col md={8}>
-                    <div className="stock-header">
-                        <div className="column-header">COMPANY<FaChevronDown className="dropdown-icon" /></div>
-                        <div className="column-header">CHANGE<FaChevronDown className="dropdown-icon" /></div>
-                        <div className="column-header">MKT PRICE<FaChevronDown className="dropdown-icon" /></div>
-                        <div className="column-header">RETURNS(%)<FaChevronDown className="dropdown-icon" /></div>
-                        <div className="column-header">CURRENT<FaChevronDown className="dropdown-icon" /></div>
+                <Col xs={12} md={12} lg={12} className="mb-3">
+                    <div className="stock-header d-none d-md-flex">
+                        <div className="column-header">COMPANY NAME</div>
+                        <div className="column-header">% CHANGE</div>
+                        <div className="column-header">MKT PRICE</div>
+                        <div className="column-header">RETURNS(%)</div>
+                        <div className="column-header">CURRENT VALUE</div>
+                        <div className="column-header">INVESTED VALUE</div>
+                        <div className="column-header">ACTION</div>
                     </div>
                     <div className="stock-list-container">
                         {stocks.map(stock => (
-                            <div className="stock-box" key={stock.id}>
+                            <a href={`/stock/${stock.stock_name}`} key={stock.stock_name} className="stock-box" style={{ textDecoration: 'none', color: 'inherit' }}>
                                 <div className="stock-row">
                                     <div className="stock-column">
-                                        <div>{stock.company}</div>
-                                        <div className="small-text">{stock.shareAmount}</div>
-                                        <div className="small-text">Avg Price: {stock.avgPrice}</div>
+                                        <div>{stock.name}</div>
+                                        <div className="small-text">{stock.quantity} shares</div>
+                                        <div className="small-text">Avg Price: {parseFloat(stock.price_bought).toFixed(2)}</div>
                                     </div>
                                     <div className="stock-column">
-                                        <div className={parseFloat(stock.priceChange) > 0 ? 'stock-price-change-up' : 'stock-price-change-down'}>
-                                            {stock.priceChange}
+                                        <div className={parseFloat(stock.profit_loss) > 0 ? 'stock-price-change-up' : 'stock-price-change-down'}>
+                                            {parseFloat(stock.percent_change).toFixed(2)} %
                                         </div>
                                     </div>
                                     <div className="stock-column">
-                                        <div>{stock.mktPrice}</div>
-                                        <div className="small-text" style={{ color: parseFloat(stock.priceChange) > 0 ? 'green' : 'red' }}>
-                                            {stock.mktPrice} {stock.priceChange}
-                                        </div>
+                                        <div>{parseFloat(stock.current_price).toFixed(2)}</div>
                                     </div>
                                     <div className="stock-column">
-                                        <div>{stock.returnAmount}</div>
-                                        <div className="small-text" style={{ color: parseFloat(stock.returnPercent) > 0 ? 'green' : 'red' }}>
-                                            {stock.returnPercent}
-                                        </div>
+                                        <div>{parseFloat(stock.profit_loss).toFixed(2)} ({parseFloat(stock.profit_loss_percent).toFixed(2)}%)</div>
                                     </div>
                                     <div className="stock-column">
-                                        <div>{stock.currentPrice}</div>
-                                        <div className="small-text">{stock.adjustedPrice}</div>
+                                        <div>{parseFloat(stock.current_value).toFixed(2)}</div>
+                                    </div>
+                                    <div className="stock-column">
+                                        <div>{parseFloat(stock.invested).toFixed(2)}</div>
+                                    </div>
+                                    <div className="stock-column">
+                                        <Button variant="success" onClick={() => handleShowBuyModal(stock)} className="mx-1 mb-md-0 ">BUY</Button>
+                                        <Button variant="danger" onClick={() => handleShowSellModal(stock)} className=" mb-md-0 ">SELL</Button>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         ))}
                     </div>
                 </Col>
-                <Col md={4}>
-                    <div className="payment-container">
-                        <div className="payment-row">
-                            <div>
-                                <div className="stock-name">HDFV MF-GETF</div>
-                                <div className="stock-details">NSE ₹87.50 (-0.15%)</div>
-                            </div>
-                            <FaTimes className="close-icon" />
-                        </div>
-                        <div className="payment-row payment-options">
-                            <div
-                                className={`payment-option ${selectedOption === 'BUY' ? 'selected' : ''}`}
-                                onClick={() => handleOptionClick('BUY')}
-                            >
-                                BUY
-                            </div>
-                            <div
-                                className={`payment-option ${selectedOption === 'SELL' ? 'selected' : ''}`}
-                                onClick={() => handleOptionClick('SELL')}
-                            >
-                                SELL
-                            </div>
-                        </div>
-                        <div className="row-container">
-            <div className="row-third">
-                <div className="small-container">Delivery</div>
-                <div className="small-container">IntraDay</div>
-                <div className="small-container">MTF</div>
-            </div>
-            <div className="input-row">
-                <div className="input-label">
-                    Qty <span className="bold-text">NSE</span>
-                </div>
-                <input type="text" className="input-field" />
-            </div>
-            <div className="input-row">
-                <div className="input-label">
-                    Price <span className="bold-text">Market</span>
-                </div>
-                <input type="text" className="input-field grey-input" value="At market" />
-            </div>
-        </div>
-        
-        {/* Fourth Row: Balance & Approx Required */}
-        
-        <div className="balance-row">
-            <div className="balance-text">Balance: ₹559</div>
-            <div className="approx-text">Approx req: ₹0</div>
-        </div>
-        <div className="balance-container">
-        <button className="buy-button">BUY</button>
-    </div>
-    </div>
-</Col>
             </Row>
+
+            {/* Buy Modal */}
+            <Modal show={showBuyModal} onHide={handleCloseBuyModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Buy {currentStock?.stock_name}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={handleBuySubmit}>
+                        <Form.Group controlId="formShares">
+                            <Form.Label>Number of Shares</Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="Enter number of shares"
+                                value={shares}
+                                onChange={(e) => setShares(e.target.value)}
+                                required
+                            />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Buy
+                        </Button>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+
+            {/* Sell Modal */}
+            <Modal show={showSellModal} onHide={handleCloseSellModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Sell {currentStock?.stock_name}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={handleSellSubmit}>
+                        <Form.Group controlId="formShares">
+                            <Form.Label>Number of Shares</Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="Enter number of shares"
+                                value={shares}
+                                onChange={(e) => setShares(e.target.value)}
+                                required
+                            />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Sell
+                        </Button>
+                    </Form>
+                </Modal.Body>
+            </Modal>
         </Container>
     );
 };
-
 
 export default StockMarket;
